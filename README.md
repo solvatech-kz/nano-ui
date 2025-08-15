@@ -86,6 +86,15 @@ NanoUI is designed with modularity, component isolation, and minimal bundle size
 - Partial integration — import only needed components.
 - Supports **ESM** and **CJS** for maximum compatibility.
 
+### 8. Accessibility by Default (WCAG 2.1 AA)
+
+- All interactive components follow **WCAG 2.1 AA** accessibility guidelines.
+- Semantic HTML elements and correct `role` / `aria-*` attributes are used for assistive technologies.
+- Focus styles are clearly visible and consistent across all components.
+- Color palettes and contrasts meet the AA standard for readability.
+- Keyboard navigation is fully supported (Tab, Enter, Space, Escape, Arrow keys).
+- Dynamic elements announce state changes to screen readers.
+
 ---
 
 ## 📦 Component Library
