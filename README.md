@@ -1,5 +1,7 @@
 # 🚀 NanoUI
 
+<img src="https://github.com/solvatech-kz/nano-ui/blob/7d5f59e8011dcb71d15ae486c2b7bc45aa796335/public/NanoLogo.png?raw=true" width="500">
+
 NanoUI is a high-performance, lightweight component library for React, built on the principles of **zero-dependency** and maximum optimization. The project is fully **open-source** and distributed without restrictions.
 
 ---
