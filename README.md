@@ -8,22 +8,14 @@ NanoUI is a high-performance, lightweight component library for React, built on 
 
 - [💡 Why NanoUI?](#-why-nanoui)
 - [🏗️ Project Architecture](#️-project-architecture)
-  - [1. Complete Component Isolation](#1-complete-component-isolation)
-  - [2. Zero-dependency and Secure Delivery](#2-zero-dependency-and-secure-delivery)
-  - [3. Optimization for Tree-shaking](#3-optimization-for-tree-shaking)
-  - [4. SSR-ready by Default](#4-ssr-ready-by-default)
-  - [5. Styling via CSS Variables](#5-styling-via-css-variables)
-  - [6. Minimizing Duplication](#6-minimizing-duplication)
-  - [7. Flexible Integration](#7-flexible-integration)
 - [📦 Component Library](#-component-library)
-  - [Basic Elements](#basic-elements)
-  - [Forms & Validation](#forms--validation)
-  - [Information Display](#information-display)
-  - [Modals & Notifications](#modals--notifications)
-  - [Navigation](#navigation)
-  - [Media](#media)
-  - [Graphics & Visualization](#graphics--visualization)
-  - [Other](#other)
+- [🛠️ Monorepo Structure & Workflow](#️-monorepo-structure--workflow)
+  - [Workspace Layout](#workspace-layout)
+  - [Creating a New Component](#creating-a-new-component)
+  - [Using Components in the Next.js App](#using-components-in-the-nextjs-app)
+  - [Testing Components](#testing-components)
+  - [Building the Library](#building-the-library)
+- [⚡ Development Tips](#-development-tips)
 
 ---
 
@@ -43,110 +35,184 @@ Additional dependencies also increase the risk of **version conflicts** and **su
 
 NanoUI is designed with modularity, component isolation, and minimal bundle size in mind.
 
-### 1. Complete Component Isolation
-
-- Own style module (**CSS Modules**).
-- Local design tokens defined within the component.
-- Built-in default parameters with overrides via `props` and CSS variables.
-- No dependency on global themes, CSS, or utility classes.
-- **Guaranteed no style conflicts** when integrating into any project.
-
-### 2. Zero-dependency and Secure Delivery
-
-- No external runtime libraries: no CSS frameworks, CSS-in-JS solutions, or UI packages.
-- The build process does not pull in transitive dependencies, eliminating `supply chain` risks.
-- All functionality is implemented internally and undergoes unified auditing.
-
-### 3. Optimization for Tree-shaking
-
-- Each component is a separate **entry-point**.
-- Styles are imported only within the component.
-- No global CSS file — the bundle contains only the styles of used components.
-
-### 4. SSR-ready by Default
-
-- Styles are loaded together with the component.
-- In SSR environments (Next.js, Remix), CSS is automatically inlined into the HTML response.
-- **FOUC** (_flash of unstyled content_) is prevented by preloading critical styles.
-
-### 5. Styling via CSS Variables
-
-- Design tokens implemented with **CSS Variables** in the component's root element.
-- Supports dynamic theming and style changes without rebuild.
-- Tokens can be locally overridden per component instance.
-
-### 6. Minimizing Duplication
-
-- Common styles are implemented as internal utilities, not global classes.
-- Variables and utilities are reused in the source code but are excluded from the bundle if unused.
-
-### 7. Flexible Integration
-
-- Works with **Vite, Webpack, Next.js, Parcel**.
-- Partial integration — import only needed components.
-- Supports **ESM** and **CJS** for maximum compatibility.
-
-### 8. Accessibility by Default (WCAG 2.1 AA)
-
-- All interactive components follow **WCAG 2.1 AA** accessibility guidelines.
-- Semantic HTML elements and correct `role` / `aria-*` attributes are used for assistive technologies.
-- Focus styles are clearly visible and consistent across all components.
-- Color palettes and contrasts meet the AA standard for readability.
-- Keyboard navigation is fully supported (Tab, Enter, Space, Escape, Arrow keys).
-- Dynamic elements announce state changes to screen readers.
+- **Complete Component Isolation** – each component has its own styles, tokens, and overrides via props or CSS variables.
+- **Zero-dependency** – no external runtime libraries, ensuring safe and lightweight builds.
+- **Tree-shaking Optimized** – each component is an entry-point, and unused styles/components are removed during bundling.
+- **SSR-ready** – styles are loaded together with the component.
+- **CSS Variable Styling** – dynamic theming without rebuild.
+- **Minimal Duplication** – internal utilities only, no global CSS pollution.
+- **Flexible Integration** – works with Vite, Webpack, Next.js, Parcel.
+- **Accessibility by Default** – semantic HTML, ARIA attributes, keyboard navigation, WCAG 2.1 AA compliant.
 
 ---
 
 ## 📦 Component Library
 
-All components follow the `zero-dependency` principle, are fully isolated, and can be used independently. Special focus is placed on semantic correctness and leveraging native HTML/CSS capabilities.
+All components are isolated, semantic, and follow zero-dependency principles.
 
-### Basic Elements
+**Basic Elements:** Button, Input, Textarea, Checkbox, RadioGroup, Switch, Select, Slider, File Upload, Color Picker  
+**Forms & Validation:** Form, FormField, Password Input, Search Input  
+**Information Display:** Card, Table, List, Avatar, Badge, Divider, Tooltip, Popover, Accordion, Tabs, Progress, Skeleton, Empty State  
+**Modals & Notifications:** Dialog/Modal, Drawer/Sidebar, Toast, Alert, Confirm Dialog  
+**Navigation:** Breadcrumbs, Pagination, Steps, Navbar, Sidebar Navigation, Command Palette  
+**Media:** Image, Video Player, Audio Player  
+**Graphics & Visualization:** Chart Wrapper, Stat  
+**Other:** Loading Spinner, Collapse, Resizable Panel, Virtualized List, Infinite Scroll, Markdown  
 
-- `Button` — buttons (primary, secondary, outline, ghost, link).
-- `Input` — single-line text fields.
-- `Textarea` — multi-line text fields.
-- `Checkbox` — with indeterminate state.
-- `Radio Group` — group of radio buttons.
-- `Switch` — toggle switch.
-- `Select` — dropdown list with custom styling.
-- `Slider`, `Range Slider` — sliders.
-- `File Upload` — file upload component.
-- `Color Picker` — color selection tool.
+---
 
-### Forms & Validation
+## 🛠️ Monorepo Structure & Workflow
 
-- `Form`, `FormField` — wrappers for working with forms.
-- `Password Input` — password field with show/hide option.
-- `Search Input` — search field with icon and quick clear.
+### Workspace Layout
 
-### Information Display
+```
+nano-ui/
+├── apps/
+│ └── web/ # Next.js demo & testing app
+├── packages/
+│ └── nanoui/ # Core component library
+│ ├── src/ # Component source code
+│ │ └── components/
+│ │ └── button/
+│ │ ├── Button.tsx
+│ │ ├── Button.module.css
+│ │ └── index.ts
+│ └── tsconfig.json
+├── package.json # Root workspace scripts
+├── pnpm-workspace.yaml # Monorepo config
+└── tsconfig.json # Root TypeScript config
+```
 
-- `Card`, `Table`, `List`.
-- `Avatar`, `Badge`, `Divider`.
-- `Tooltip`, `Popover`, `Accordion`, `Tabs`.
-- `Progress`, `Skeleton`, `Empty State`.
 
-### Modals & Notifications
+- `packages/nanoui` – contains the actual component library.
+- `apps/web` – Next.js application to test and demonstrate components.
+- Root folder – contains workspace-wide scripts for building, testing, linting, and formatting.
 
-- `Dialog` / `Modal`.
-- `Drawer` / `Sidebar`.
-- `Toast`, `Alert`, `Confirm Dialog`.
+---
 
-### Navigation
+### Creating a New Component
 
-- `Breadcrumbs`, `Pagination`, `Steps`.
-- `Navbar`, `Sidebar Navigation`, `Command Palette`.
+1. Create a new folder under `packages/nanoui/src/components/`:
 
-### Media
+`packages/nanoui/src/components/MyComponent/`
 
-- `Image`, `Video Player`, `Audio Player`.
 
-### Graphics & Visualization
+2. Add the component files:
 
-- `Chart Wrapper`, `Stat`.
+- `MyComponent.tsx` – React component code.
+- `MyComponent.module.css` – CSS module for styles.
+- `index.ts` – export component:
 
-### Other
+```ts
+export { default as MyComponent } from './MyComponent'
+```
 
-- `Loading Spinner`, `Collapse`, `Resizable Panel`.
-- `Virtualized List`, `Infinite Scroll`, `Markdown`.
+3. Update packages/nanoui/src/index.ts to export the new component:
+
+```ts
+export * from './components/MyComponent'
+```
+
+Using Components in the Next.js App
+
+1. Ensure @nanoui/core is listed in apps/web/package.json dependencies as:
+
+``
+"@nanoui/core": "workspace:*"
+``
+
+2. Import the component in your pages:
+
+```ts
+import { Button, MyComponent } from '@nanoui/core'
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Hello NanoUI</h1>
+      <Button>Click me</Button>
+      <MyComponent />
+    </main>
+  )
+}
+```
+
+3. Run the Next.js app for live preview:
+
+`pnpm -F web dev`
+
+### 🧪 Testing Components
+
+All components are tested using **Vitest** and `@testing-library/react`.
+
+1. **Write unit tests next to the component**  
+For example, for `Button`:
+
+```ts
+import { render, screen } from '@testing-library/react'
+import Button from './Button'
+
+test('renders Button component', () => {
+  render(<Button>Click me</Button>)
+  expect(screen.getByText('Click me')).toBeInTheDocument()
+})
+```
+
+2. **Run tests for the package**
+
+```bash
+pnpm -F @nanoui/core test
+```
+
+3. **Integration testing in Next.js app**
+
+```ts
+import { Button } from '@nanoui/core'
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Hello NanoUI</h1>
+      <Button>Click me</Button>
+    </main>
+  )
+}
+```
+
+4. **Start dev server**
+
+```bash
+pnpm -F web dev
+```
+
+5. **Check component behavior and styling**
+- All CSS is automatically imported from the package
+- Verify props handling and interaction behavior
+
+---
+
+### 🛠️ Developing New Components
+
+1. **Create a new component folder**  
+`packages/nanoui/src/components/YourComponent/`
+
+2. **Add files**
+- `YourComponent.tsx` — component implementation
+- `YourComponent.module.css` — styles via CSS Modules
+- `index.ts` — export
+```ts
+export { default } from './YourComponent'
+```
+
+3. **Add TypeScript types if needed**  
+Inline in component or via `.d.ts` file.
+
+4. **Write tests immediately**  
+Place tests next to the component using `Vitest` and `@testing-library/react`.
+
+5. **Import into Next.js app for integration testing**  
+Use as usual:
+
+```ts
+import { YourComponent } from '@nanoui/core'
+```
