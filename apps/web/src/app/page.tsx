@@ -1,4 +1,4 @@
-import { Button } from "@nanoui/core";
+import {Button} from '@nanoui/core'
 
 export default function Home() {
   return (
@@ -6,5 +6,5 @@ export default function Home() {
       <h1>Hello NanoUI</h1>
       <Button>Click me</Button>
     </main>
-  );
+  )
 }

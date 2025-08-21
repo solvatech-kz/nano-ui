@@ -67,7 +67,7 @@ NanoUI is designed with modularity, component isolation, and minimal bundle size
 
 - Styles are loaded together with the component.
 - In SSR environments (Next.js, Remix), CSS is automatically inlined into the HTML response.
-- **FOUC** (*flash of unstyled content*) is prevented by preloading critical styles.
+- **FOUC** (_flash of unstyled content_) is prevented by preloading critical styles.
 
 ### 5. Styling via CSS Variables
 
@@ -102,6 +102,7 @@ NanoUI is designed with modularity, component isolation, and minimal bundle size
 All components follow the `zero-dependency` principle, are fully isolated, and can be used independently. Special focus is placed on semantic correctness and leveraging native HTML/CSS capabilities.
 
 ### Basic Elements
+
 - `Button` — buttons (primary, secondary, outline, ghost, link).
 - `Input` — single-line text fields.
 - `Textarea` — multi-line text fields.
@@ -114,31 +115,38 @@ All components follow the `zero-dependency` principle, are fully isolated, and c
 - `Color Picker` — color selection tool.
 
 ### Forms & Validation
+
 - `Form`, `FormField` — wrappers for working with forms.
 - `Password Input` — password field with show/hide option.
 - `Search Input` — search field with icon and quick clear.
 
 ### Information Display
+
 - `Card`, `Table`, `List`.
 - `Avatar`, `Badge`, `Divider`.
 - `Tooltip`, `Popover`, `Accordion`, `Tabs`.
 - `Progress`, `Skeleton`, `Empty State`.
 
 ### Modals & Notifications
+
 - `Dialog` / `Modal`.
 - `Drawer` / `Sidebar`.
 - `Toast`, `Alert`, `Confirm Dialog`.
 
 ### Navigation
+
 - `Breadcrumbs`, `Pagination`, `Steps`.
 - `Navbar`, `Sidebar Navigation`, `Command Palette`.
 
 ### Media
+
 - `Image`, `Video Player`, `Audio Player`.
 
 ### Graphics & Visualization
+
 - `Chart Wrapper`, `Stat`.
 
 ### Other
+
 - `Loading Spinner`, `Collapse`, `Resizable Panel`.
 - `Virtualized List`, `Infinite Scroll`, `Markdown`.
