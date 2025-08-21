@@ -57,7 +57,7 @@ All components are isolated, semantic, and follow zero-dependency principles.
 **Navigation:** Breadcrumbs, Pagination, Steps, Navbar, Sidebar Navigation, Command Palette  
 **Media:** Image, Video Player, Audio Player  
 **Graphics & Visualization:** Chart Wrapper, Stat  
-**Other:** Loading Spinner, Collapse, Resizable Panel, Virtualized List, Infinite Scroll, Markdown  
+**Other:** Loading Spinner, Collapse, Resizable Panel, Virtualized List, Infinite Scroll, Markdown
 
 ---
 
@@ -83,7 +83,6 @@ nano-ui/
 └── tsconfig.json # Root TypeScript config
 ```
 
-
 - `packages/nanoui` – contains the actual component library.
 - `apps/web` – Next.js application to test and demonstrate components.
 - Root folder – contains workspace-wide scripts for building, testing, linting, and formatting.
@@ -96,7 +95,6 @@ nano-ui/
 
 `packages/nanoui/src/components/MyComponent/`
 
-
 2. Add the component files:
 
 - `MyComponent.tsx` – React component code.
@@ -104,7 +102,7 @@ nano-ui/
 - `index.ts` – export component:
 
 ```ts
-export { default as MyComponent } from './MyComponent'
+export {default as MyComponent} from './MyComponent'
 ```
 
 3. Update packages/nanoui/src/index.ts to export the new component:
@@ -117,9 +115,7 @@ Using Components in the Next.js App
 
 1. Ensure @nanoui/core is listed in apps/web/package.json dependencies as:
 
-``
-"@nanoui/core": "workspace:*"
-``
+`"@nanoui/core": "workspace:*"`
 
 2. Import the component in your pages:
 
@@ -146,7 +142,7 @@ export default function Home() {
 All components are tested using **Vitest** and `@testing-library/react`.
 
 1. **Write unit tests next to the component**  
-For example, for `Button`:
+   For example, for `Button`:
 
 ```ts
 import { render, screen } from '@testing-library/react'
@@ -186,6 +182,7 @@ pnpm -F web dev
 ```
 
 5. **Check component behavior and styling**
+
 - All CSS is automatically imported from the package
 - Verify props handling and interaction behavior
 
@@ -194,25 +191,27 @@ pnpm -F web dev
 ### 🛠️ Developing New Components
 
 1. **Create a new component folder**  
-`packages/nanoui/src/components/YourComponent/`
+   `packages/nanoui/src/components/YourComponent/`
 
 2. **Add files**
+
 - `YourComponent.tsx` — component implementation
 - `YourComponent.module.css` — styles via CSS Modules
 - `index.ts` — export
+
 ```ts
-export { default } from './YourComponent'
+export {default} from './YourComponent'
 ```
 
 3. **Add TypeScript types if needed**  
-Inline in component or via `.d.ts` file.
+   Inline in component or via `.d.ts` file.
 
 4. **Write tests immediately**  
-Place tests next to the component using `Vitest` and `@testing-library/react`.
+   Place tests next to the component using `Vitest` and `@testing-library/react`.
 
 5. **Import into Next.js app for integration testing**  
-Use as usual:
+   Use as usual:
 
 ```ts
-import { YourComponent } from '@nanoui/core'
+import {YourComponent} from '@nanoui/core'
 ```
