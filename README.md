@@ -14,7 +14,6 @@ NanoUI is a high-performance, lightweight component library for React, built on 
   - [Creating a New Component](#creating-a-new-component)
   - [Using Components in the Next.js App](#using-components-in-the-nextjs-app)
   - [Testing Components](#testing-components)
-  - [Developing New Components](#developing-new-components)
 
 ---
 
