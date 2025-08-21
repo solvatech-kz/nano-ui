@@ -14,8 +14,7 @@ NanoUI is a high-performance, lightweight component library for React, built on 
   - [Creating a New Component](#creating-a-new-component)
   - [Using Components in the Next.js App](#using-components-in-the-nextjs-app)
   - [Testing Components](#testing-components)
-  - [Building the Library](#building-the-library)
-- [⚡ Development Tips](#-development-tips)
+  - [Developing New Components](#developing-new-components)
 
 ---
 
@@ -111,7 +110,7 @@ export {default as MyComponent} from './MyComponent'
 export * from './components/MyComponent'
 ```
 
-Using Components in the Next.js App
+### Using Components in the Next.js App
 
 1. Ensure @nanoui/core is listed in apps/web/package.json dependencies as:
 
@@ -137,7 +136,7 @@ export default function Home() {
 
 `pnpm -F web dev`
 
-### 🧪 Testing Components
+### Testing Components
 
 All components are tested using **Vitest** and `@testing-library/react`.
 
