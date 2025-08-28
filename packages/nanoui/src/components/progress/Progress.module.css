@@ -2,9 +2,9 @@
     --sm: 0.25rem;
     --md: 0.5rem;
     --lg: 1rem;
-    --progress-value: 0%; /* this value is controlled by the component */
+    --progress-value: 0%;
     --progress-fill-color: var(--foreground);
-    --progress-background-color: rgba(0, 0, 0, 0.17); /* fallback if color-mix() is not supported */
+    --progress-background-color: rgba(0, 0, 0, 0.17);
     --progress-background-color: color-mix(in hsl, var(--foreground) 17%, transparent);
     --progress-line-height: var(--md);
 
