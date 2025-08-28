@@ -10,17 +10,10 @@
 
     position: relative;
     overflow: hidden;
+    background-color: var(--progress-background-color);
     height: var(--progress-line-height);
     width: calc(100% - 20px * 2);
     border-radius: var(--lg);
-}
-
-.progress::before {
-    content: "";
-    position: absolute;
-    background-color: var(--progress-background-color);
-    height: 100%;
-    width: 100%;
 }
 
 .progress::after {
