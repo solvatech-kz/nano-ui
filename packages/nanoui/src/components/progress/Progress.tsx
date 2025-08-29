@@ -1,4 +1,4 @@
-import {type FC} from 'react'
+import {type FC, type CSSProperties} from 'react'
 import styles from './Progress.module.css'
 
 interface ProgressProps {
@@ -6,7 +6,7 @@ interface ProgressProps {
   max?: number
   size?: 'sm' | 'md' | 'lg'
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
 const Progress: FC<ProgressProps> = ({value, max = 100, size = 'md', className, style}) => {

@@ -4,7 +4,7 @@ import {Progress} from '@nanoui/core'
 import {type FC, useState} from 'react'
 import styles from './ProgressPreview.module.css'
 
-const ProgressPreview: FC = () => {
+export const ProgressPreview: FC = () => {
   const [value, setValue] = useState<number>(0)
   const [maxValue, setMaxValue] = useState<number>(100)
 
@@ -33,5 +33,3 @@ const ProgressPreview: FC = () => {
     </>
   )
 }
-
-export {ProgressPreview}
