@@ -27,4 +27,4 @@ const Progress: FC<ProgressProps> = ({value, max = 100, size = 'md', className, 
   )
 }
 
-export default Progress
+export {Progress}
