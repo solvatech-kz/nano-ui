@@ -1,0 +1,55 @@
+.list {
+    --list-item-spacing: 1rem;
+
+    --list-bullet-color: #fdf800;
+
+    --list-number-color: #EDEDED;
+
+    --list-icon-spacing: 0.5rem;
+
+    margin-top: 1rem;
+
+    li {
+        margin-bottom: var(--list-item-spacing);
+        &::marker {
+            list-style-type: decimal;
+            color: var(--list-number-color);
+        }
+    }
+
+    &.unordered li::marker {
+        list-style-type: disc;
+        color: var(--list-bullet-color);
+    }
+}
+
+.content {
+    display: flex;
+    gap: var(--list-icon-spacing);
+    width: 99%;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+}
+
+.icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.singleLine .text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multiline .text {
+    white-space: normal;
+    word-break: break-word;
+}
+
+
+
+
