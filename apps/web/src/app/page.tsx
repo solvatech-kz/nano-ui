@@ -1,4 +1,5 @@
 import {Button} from '@nanoui/core'
+import {Switch} from '@nanoui/core/src/components/switch'
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Switch example</h2>
+        <Switch/>
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>
