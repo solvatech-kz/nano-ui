@@ -1,0 +1,15 @@
+.progress {
+  margin: 0.5rem 0;
+}
+
+.input {
+  border: 1px solid black;
+  border-radius: 0.25rem;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0.5rem 0;
+  padding: 0.25rem;
+
+  &:first-of-type {
+    margin-right: 0.5rem;
+  }
+}
