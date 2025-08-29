@@ -17,22 +17,23 @@
 }
 
 .progress::after {
-    content: "";
-    position: absolute;
-    background-color: var(--progress-fill-color);
-    height: 100%;
-    width: var(--progress-value);
-    transition: width 0.5s;
+  content: "";
+  position: absolute;
+  background-color: var(--progress-fill-color);
+  height: 100%;
+  width: var(--progress-value);
+  border-radius: var(--lg);
+  transition: width 0.5s;
 }
 
 .sm {
-    --progress-line-height: var(--sm);
+  --progress-line-height: var(--sm);
 }
 
 .md {
-    --progress-line-height: var(--md);
+  --progress-line-height: var(--md);
 }
 
 .lg {
-    --progress-line-height: var(--lg);
+  --progress-line-height: var(--lg);
 }
