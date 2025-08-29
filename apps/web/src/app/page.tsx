@@ -1,4 +1,5 @@
-import {Button, List} from '@nanoui/core';
+import {Button, List} from '@nanoui/core'
+import {ProgressPreview} from '@/components/ProgressPreview'
 
 export default function Home() {
   const items = [
@@ -30,6 +31,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Progress example</h2>
+        <ProgressPreview />
       </section>
     </main>
   )
