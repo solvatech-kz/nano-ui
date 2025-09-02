@@ -1,28 +1,38 @@
-import React, {useEffect, useRef, useState} from 'react'
+import {
+  ButtonHTMLAttributes,
+  ComponentType,
+  CSSProperties,
+  FC,
+  ReactNode,
+  JSX,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import styles from './Button.module.css'
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
   loading?: boolean
   autoResolveState?: boolean
-  successIcon?: React.ReactNode
-  errorIcon?: React.ReactNode
-  loaderIcon?: React.ReactNode
-  icon?: React.ReactNode
+  successIcon?: ReactNode
+  errorIcon?: ReactNode
+  loaderIcon?: ReactNode
+  icon?: ReactNode
   iconPosition?: 'left' | 'right'
   onClick?: (e: MouseEvent) => Promise<any> | void
   onMouseDown?: (e: MouseEvent) => void
   onTouchStart?: (e: TouchEvent) => void
-  as?: keyof React.JSX.IntrinsicElements | React.ComponentType
+  as?: keyof JSX.IntrinsicElements | ComponentType
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
   href?: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   disabled = false,
@@ -110,11 +120,7 @@ export const Button: React.FC<ButtonProps> = ({
     return returnProps
   }
 
-  const stateHandler = (
-    state: boolean | React.ReactNode | undefined,
-    icon: React.ReactNode,
-    fallback?: React.ReactNode
-  ) => {
+  const stateHandler = (state: boolean | ReactNode | undefined, icon: ReactNode, fallback?: ReactNode) => {
     if (!state || (!icon && !fallback)) return null
     return (
       <div className={styles['button-state-wrapper']}>
