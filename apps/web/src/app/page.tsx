@@ -115,6 +115,21 @@ export default function Home() {
           </Button>
         </div>
       </section>
+      <section className="example-section">
+        <h2>Switch example</h2>
+      </section>
+      <section className="example-section">
+        <h2>Tooltip example</h2>
+      </section>
+      <section className="example-section">
+        <h2>File Uploader example</h2>
+      </section>
+      <section className="example-section">
+        <h2>List example</h2>
+      </section>
+      <section className="example-section">
+        <h2>Progress example</h2>
+      </section>
     </main>
   )
 }
