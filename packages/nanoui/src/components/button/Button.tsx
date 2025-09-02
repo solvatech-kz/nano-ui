@@ -131,15 +131,13 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <Component className={buttonClassNames()} style={style} {...ownProps()}>
-      <>
-        {isSuccess && stateHandler(isSuccess, successIcon, <span>Success</span>)}
-        {isError && stateHandler(isError, errorIcon, <span>Error</span>)}
-        {(!isSuccess || !isError || loading || isLoading) &&
-          stateHandler(isSuccess, loaderIcon, <div className={styles['button-loader']} />)}
-        {icon && iconPosition === 'left' && icon}
-        {children}
-        {icon && iconPosition !== 'left' && icon}
-      </>
+      {isSuccess && stateHandler(isSuccess, successIcon, <span>Success</span>)}
+      {isError && stateHandler(isError, errorIcon, <span>Error</span>)}
+      {(!isSuccess || !isError || loading || isLoading) &&
+        stateHandler(isSuccess, loaderIcon, <div className={styles['button-loader']} />)}
+      {icon && iconPosition === 'left' && icon}
+      {children}
+      {icon && iconPosition !== 'left' && icon}
     </Component>
   )
 }
