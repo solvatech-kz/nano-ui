@@ -1,4 +1,5 @@
-import {Button} from '@nanoui/core'
+'use client'
+import {Button, FileUpload} from '@nanoui/core'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>File Uploader example</h2>
+        <FileUpload onChange={() => {}} accept={'image/*, audio/*, video/*'} multiple={true} />
       </section>
       <section className="example-section">
         <h2>List example</h2>

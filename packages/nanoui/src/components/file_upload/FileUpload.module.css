@@ -1,0 +1,84 @@
+:root {
+  --fileupload-border-color: #ccc;
+  --fileupload-background-color: #fff;
+  --fileupload-text-color: #333;
+  --fileupload-drag-over-border-color: #0070f3;
+}
+
+.root {
+  margin-top: 20px;
+  width: calc(100% - 40px);
+  border: 2px dashed var(--fileupload-border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  background: var(--fileupload-background-color);
+  color: var(--fileupload-text-color);
+}
+
+.dragOver {
+  border-color: var(--fileupload-drag-over-border-color);
+  background: #f0f8ff;
+}
+
+.label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input {
+  display: none;
+}
+
+.file__icon {
+  display: inline-block;
+  inline-size: 40px !important;
+  block-size: 40px !important;
+}
+
+.file__list {
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.file__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid #eee;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  background: #fafafa;
+}
+
+.file__button {
+  color: #0070f3;
+}
+
+.file__text {
+  flex-grow: 1;
+  text-align: left;
+  word-break: break-all;
+}
+
+.remove__btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d00;
+  font-size: 1rem;
+}
+
+.remove__btn:focus {
+  outline: 2px solid #0070f3;
+  outline-offset: 2px;
+}
