@@ -1,17 +1,14 @@
 'use client'
 
-import {Button, ButtonBaseProps} from '@nanoui/core'
+import {BUTTON_CONTROLLER_ITEMS} from './config'
+import {Button, ButtonBaseProps, ButtonSize} from '@nanoui/core'
 import {useState} from 'react'
 
-type TSize = 'sm' | 'md' | 'lg'
-
 export default function Home() {
-  const [size, setSize] = useState<TSize>('md')
+  const [size, setSize] = useState<ButtonSize>('md')
   const [state, setState] = useState<ButtonBaseProps<'button'>['state']>()
 
-  const handleSizeChange = (size: TSize) => {
-    setSize(size)
-  }
+  const handleSizeChange = (size: ButtonSize) => setSize(size)
 
   const getExample = () => {
     setState('loading')
@@ -32,32 +29,16 @@ export default function Home() {
   return (
     <main>
       <h1>Hello NanoUI</h1>
-      <div className="controller">
-        <span className="">Size: {size}</span>
-        <Button
-          onClick={() => {
-            handleSizeChange('sm')
-          }}
-        >
-          Small
-        </Button>
-        <Button
-          onClick={() => {
-            handleSizeChange('md')
-          }}
-        >
-          Medium
-        </Button>
-        <Button
-          onClick={() => {
-            handleSizeChange('lg')
-          }}
-        >
-          Large
-        </Button>
-      </div>
       <section className="example-section example-button">
         <h2>Button example</h2>
+        <div className="example-button-controller">
+          <span>Size: {size}</span>
+          {BUTTON_CONTROLLER_ITEMS.map((item) => (
+            <Button key={item.label} onClick={() => handleSizeChange(item.size)} size={item.size}>
+              {item.label}
+            </Button>
+          ))}
+        </div>
         <div className="example-button-item">
           <span className="example-button-name">With state:</span>
           <Button

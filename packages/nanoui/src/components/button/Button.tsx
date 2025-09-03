@@ -1,6 +1,8 @@
 import {CSSProperties, FC, ReactNode, ElementType, ComponentPropsWithoutRef, PropsWithChildren} from 'react'
 import styles from './Button.module.css'
 
+export type ButtonSize = 'sm' | 'md' | 'lg'
+
 export interface ButtonBaseProps<C extends ElementType> {
   as?: C
   autoResolveState?: boolean
@@ -14,7 +16,7 @@ export interface ButtonBaseProps<C extends ElementType> {
   onClick?: (e: MouseEvent) => void
   onMouseDown?: (e: MouseEvent) => void
   onTouchStart?: (e: TouchEvent) => void
-  size?: 'sm' | 'md' | 'lg'
+  size?: ButtonSize
   state?: 'loading' | 'success' | 'error'
   style?: CSSProperties
   successIcon?: string

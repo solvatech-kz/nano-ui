@@ -58,6 +58,12 @@ a {
   border-radius: 6px;
 }
 
+.example-button-controller {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
 .example-button-item {
   display: flex;
   gap: 20px;
