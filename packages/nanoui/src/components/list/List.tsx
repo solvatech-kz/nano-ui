@@ -1,10 +1,10 @@
-import React from 'react';
+import type { CSSProperties, FC, ReactNode } from "react";
 import styles from './List.module.css';
 
 interface ListItem {
   id: string | number;
-  text: string | React.ReactNode;
-  icon?: React.ReactNode;
+  text: string | ReactNode;
+  icon?: ReactNode;
   multiline?: boolean;
 }
 
@@ -12,10 +12,10 @@ interface ListProps {
   items: ListItem[];
   ordered?: boolean;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-const List :React.FC<ListProps> = ({items, ordered = true, className, style}) => {
+export const List :FC<ListProps> = ({items, ordered = true, className, style}) => {
   const ListTag = ordered ? "ol" : "ul";
 return (
   <ListTag className={`${className || ""} ${styles.list} ${!ordered ? styles.unordered : ""}`} style={style}>
@@ -35,5 +35,3 @@ return (
   </ListTag>
 );
 };
-
-export default List;
