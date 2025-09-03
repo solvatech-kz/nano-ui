@@ -22,7 +22,11 @@ export const List: FC<ListProps> = ({items, ordered = true, className, style}) =
       {items.map(({id, icon, text, multiline}) => (
         <li key={id} className={`${styles.item} ${multiline ? styles.multiline : styles.singleLine}`}>
           <div className={styles.content}>
-            {icon && <span className={styles.icon}>{icon}</span>}
+            {icon && (
+              <span className={styles.icon} aria-hidden="true">
+                {icon}
+              </span>
+            )}
             <span className={styles.text}>{text}</span>
           </div>
           <hr className={styles.separator} />
