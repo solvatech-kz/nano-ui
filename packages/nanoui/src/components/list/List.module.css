@@ -1,55 +1,70 @@
 .list {
-    --list-item-spacing: 1rem;
+  --list-item-spacing: 1rem;
 
-    --list-bullet-color: #fdf800;
+  --list-bullet-color: #fdf800;
 
-    --list-number-color: #EDEDED;
+  --list-number-color: #ededed;
 
-    --list-icon-spacing: 0.5rem;
+  --list-icon-spacing: 0.5rem;
 
-    margin-top: 1rem;
+  margin-top: 1rem;
 
-    li {
-        margin-bottom: var(--list-item-spacing);
-        &::marker {
-            list-style-type: decimal;
-            color: var(--list-number-color);
-        }
+  li {
+    margin-bottom: var(--list-item-spacing);
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    &::marker {
+      list-style-type: decimal;
+      color: var(--list-number-color);
     }
+  }
 
-    &.unordered li::marker {
-        list-style-type: disc;
-        color: var(--list-bullet-color);
-    }
+  &.unordered li::marker {
+    list-style-type: disc;
+    color: var(--list-bullet-color);
+  }
+}
+
+.item:has(.icon) {
+  list-style-type: none;
 }
 
 .content {
-    display: flex;
-    gap: var(--list-icon-spacing);
-    width: 99%;
+  display: flex;
+  align-items: center;
+  gap: var(--list-icon-spacing);
+  width: 99%;
+  margin-bottom: var(--list-item-spacing);
+  transition: transform 0.2s ease;
+  &:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
 }
 
 .icon {
-    width: 1em;
-    height: 1em;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
 }
 
 .icon svg {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .singleLine .text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .multiline .text {
-    white-space: normal;
-    word-break: break-word;
+  white-space: normal;
+  word-break: break-word;
 }
 
-
-
-
+.separator {
+  border: none;
+  border-top: 1px solid #9e9e9e;
+}
