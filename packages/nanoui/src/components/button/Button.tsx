@@ -1,151 +1,109 @@
-import {
-  ButtonHTMLAttributes,
-  ComponentType,
-  CSSProperties,
-  FC,
-  ReactNode,
-  JSX,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import {CSSProperties, FC, ReactNode, ElementType, ComponentPropsWithoutRef, PropsWithChildren} from 'react'
 import styles from './Button.module.css'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link'
-  size?: 'sm' | 'md' | 'lg'
-  disabled?: boolean
-  loading?: boolean
+export interface ButtonBaseProps<C extends ElementType> {
+  as?: C
   autoResolveState?: boolean
-  successIcon?: string
+  className?: string
+  disabled?: boolean
   errorIcon?: string
-  loaderIcon?: string
   icon?: string
   iconPosition?: 'left' | 'right'
-  onClick?: (e: MouseEvent) => Promise<any> | void
+  loaderIcon?: string
+  loading?: boolean
+  onClick?: (e: MouseEvent) => void
   onMouseDown?: (e: MouseEvent) => void
   onTouchStart?: (e: TouchEvent) => void
-  as?: keyof JSX.IntrinsicElements | ComponentType
-  className?: string
+  size?: 'sm' | 'md' | 'lg'
+  state?: 'loading' | 'success' | 'error'
   style?: CSSProperties
-  href?: string
-  children: ReactNode
+  successIcon?: string
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link'
 }
+
+type ButtonProps<C extends ElementType> = PropsWithChildren<ButtonBaseProps<C>> &
+  Omit<ComponentPropsWithoutRef<C>, keyof ButtonBaseProps<C>>
+
+const DefaultLoader: FC = () => <div className={styles['button-loader']} />
+
+const ButtonStateWrapper: FC<{children: ReactNode}> = ({children}) => (
+  <div className={styles['button-state-wrapper']}>
+    <div className={styles['button-state']}>{children}</div>
+  </div>
+)
 
 const Icon: FC<{iconPath: string}> = ({iconPath}) => {
   if (!iconPath) return null
   return <img src={iconPath} alt="" />
 }
 
-export const Button: FC<ButtonProps> = ({
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  loading = false,
+export const Button = <C extends ElementType = 'button'>({
+  as,
   autoResolveState = false,
-  successIcon,
+  children,
+  className,
+  disabled = false,
   errorIcon,
-  loaderIcon,
   icon,
   iconPosition = 'left',
-  onClick,
-  onMouseDown,
-  onTouchStart,
-  as: Component = 'button',
-  className,
+  loaderIcon,
+  loading = false,
+  size = 'md',
+  state,
   style,
-  href = '#',
-  children,
+  successIcon,
+  variant = 'primary',
   ...props
-}) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const timeoutId = useRef<number | null>(null)
+}: ButtonProps<C>) => {
+  const Component = as || 'button'
 
-  //TODO: handle type, change any
-  const handleInteraction = (callback: ((e: any) => Promise<any> | void) | undefined, ...args: any) => {
-    if (!callback) return
-
-    if (autoResolveState) handleAutoResolve(callback)
-    else callback(args.e)
-  }
-
-  const handleClearTimeout = () => {
-    if (timeoutId.current !== null) {
-      clearTimeout(timeoutId.current)
-      timeoutId.current = null
-    }
-  }
-
-  //TODO: handle type, change any
-  const handleAutoResolve = (fn: (...args: any) => any) => {
-    handleClearTimeout()
-    setIsLoading(true)
-
-    fn()
-      .then((response: any) => {
-        setIsSuccess(true)
-      })
-      .catch(() => {
-        setIsError(true)
-      })
-      .finally(() => {
-        timeoutId.current = setTimeout(() => {
-          setIsLoading(false)
-          setIsSuccess(false)
-          setIsError(false)
-        }, 2000)
-      })
-  }
-
-  const buttonClassNames = () => {
+  const getClassName = () => {
     let returnClassName = `${styles['button-base']} ${styles[`button-${variant}`]} ${styles[`button-${size}`]}`
     if (disabled) returnClassName += ` ${styles[`button-disabled`]}`
 
-    return className ? returnClassName + className : returnClassName
+    return className ? `${returnClassName} ${className}` : returnClassName
   }
 
-  const ownProps = () => {
-    //TODO: handle type, change any
-    let returnProps: any = {
-      onClick: (e: MouseEvent) => handleInteraction(onClick, e),
-      onMouseDown: (e: MouseEvent) => handleInteraction(onMouseDown, e),
-      onTouchStart: (e: TouchEvent) => handleInteraction(onTouchStart, e),
-      disabled: disabled || loading || isLoading,
-      ...props
+  const ownProps = () => ({
+    className: getClassName(),
+    disabled: disabled || loading,
+    style,
+    ...props,
+    ...(disabled || loading ? {'aria-disabled': true} : {}),
+    ...(Component !== 'button' ? {role: 'button'} : {})
+  })
+
+  const renderState = () => {
+    let icon: string | undefined, fallback: ReactNode
+
+    switch (state) {
+      case 'success':
+        icon = successIcon
+        fallback = <span>Success</span>
+        break
+      case 'error':
+        icon = errorIcon
+        fallback = <span>Error</span>
+        break
+      case 'loading':
+        icon = loaderIcon
+        fallback = <DefaultLoader />
+        break
+      default:
+        return null
     }
 
-    if (Component !== 'button') {
-      returnProps.role = 'button'
-      returnProps.href = href
-    }
-    if (disabled || loading || isLoading) returnProps['aria-disabled'] = true
-
-    return returnProps
+    return <ButtonStateWrapper>{icon ? <Icon iconPath={icon} /> : fallback}</ButtonStateWrapper>
   }
-
-  const stateHandler = (state: boolean | ReactNode | undefined, icon: string | undefined, fallback?: ReactNode) => {
-    if (!state || (!icon && !fallback)) return null
-    return (
-      <div className={styles['button-state-wrapper']}>
-        <div className={styles['button-state']}>{icon ? <Icon iconPath={icon} /> : fallback}</div>
-      </div>
-    )
-  }
-
-  useEffect(() => {
-    return () => {
-      handleClearTimeout()
-    }
-  }, [])
 
   return (
-    <Component className={buttonClassNames()} style={style} {...ownProps()}>
-      {(!isSuccess || !isError || loading || isLoading) &&
-        stateHandler(loading || isLoading, loaderIcon, <div className={styles['button-loader']} />)}
-      {isSuccess && stateHandler(isSuccess, successIcon, <span>Success</span>)}
-      {isError && stateHandler(isError, errorIcon, <span>Error</span>)}
+    <Component {...ownProps()}>
+      {loading && !state && (
+        <ButtonStateWrapper>
+          <DefaultLoader />
+        </ButtonStateWrapper>
+      )}
+      {renderState()}
       {icon && iconPosition === 'left' && <Icon iconPath={icon} />}
       {children}
       {icon && iconPosition !== 'left' && <Icon iconPath={icon} />}

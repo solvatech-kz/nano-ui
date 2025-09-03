@@ -1,25 +1,31 @@
 'use client'
 
-import {Button} from '@nanoui/core'
-import {useEffect, useState} from 'react'
+import {Button, ButtonBaseProps} from '@nanoui/core'
+import {useState} from 'react'
 
 type TSize = 'sm' | 'md' | 'lg'
 
 export default function Home() {
   const [size, setSize] = useState<TSize>('md')
+  const [state, setState] = useState<ButtonBaseProps<'button'>['state']>()
 
   const handleSizeChange = (size: TSize) => {
     setSize(size)
   }
 
   const getExample = () => {
+    setState('loading')
     return fetch('https://jsonplaceholder.typicode.com/todo/1')
       .then((response) => {
         if (!response.ok) throw Error(response.statusText)
         return response.json()
       })
       .then((json) => {
+        setState('success')
         return json
+      })
+      .catch((error) => {
+        setState('error')
       })
   }
 
@@ -57,7 +63,7 @@ export default function Home() {
           <Button
             size={size}
             onClick={getExample}
-            autoResolveState={true}
+            state={state}
             successIcon="./success.svg"
             errorIcon="./error.svg"
             variant="secondary"
@@ -109,7 +115,7 @@ export default function Home() {
         </div>
         <div className="example-section-item">
           <span className="example-section-name">As anchor tag:</span>
-          <Button size={size} variant="link" as="a">
+          <Button size={size} variant="link" as="a" href="#">
             Click me
           </Button>
         </div>
