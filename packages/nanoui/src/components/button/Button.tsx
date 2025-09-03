@@ -17,10 +17,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean
   loading?: boolean
   autoResolveState?: boolean
-  successIcon?: ReactNode
-  errorIcon?: ReactNode
-  loaderIcon?: ReactNode
-  icon?: ReactNode
+  successIcon?: string
+  errorIcon?: string
+  loaderIcon?: string
+  icon?: string
   iconPosition?: 'left' | 'right'
   onClick?: (e: MouseEvent) => Promise<any> | void
   onMouseDown?: (e: MouseEvent) => void
@@ -30,6 +30,11 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   style?: CSSProperties
   href?: string
   children: ReactNode
+}
+
+const Icon: FC<{iconPath: string}> = ({iconPath}) => {
+  if (!iconPath) return null
+  return <img src={iconPath} alt="" />
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -120,11 +125,11 @@ export const Button: FC<ButtonProps> = ({
     return returnProps
   }
 
-  const stateHandler = (state: boolean | ReactNode | undefined, icon: ReactNode, fallback?: ReactNode) => {
+  const stateHandler = (state: boolean | ReactNode | undefined, icon: string | undefined, fallback?: ReactNode) => {
     if (!state || (!icon && !fallback)) return null
     return (
       <div className={styles['button-state-wrapper']}>
-        <div className={styles['button-state']}>{icon || fallback}</div>
+        <div className={styles['button-state']}>{icon ? <Icon iconPath={icon} /> : fallback}</div>
       </div>
     )
   }
@@ -137,13 +142,13 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <Component className={buttonClassNames()} style={style} {...ownProps()}>
+      {(!isSuccess || !isError || loading || isLoading) &&
+        stateHandler(loading || isLoading, loaderIcon, <div className={styles['button-loader']} />)}
       {isSuccess && stateHandler(isSuccess, successIcon, <span>Success</span>)}
       {isError && stateHandler(isError, errorIcon, <span>Error</span>)}
-      {(!isSuccess || !isError || loading || isLoading) &&
-        stateHandler(isSuccess, loaderIcon, <div className={styles['button-loader']} />)}
-      {icon && iconPosition === 'left' && icon}
+      {icon && iconPosition === 'left' && <Icon iconPath={icon} />}
       {children}
-      {icon && iconPosition !== 'left' && icon}
+      {icon && iconPosition !== 'left' && <Icon iconPath={icon} />}
     </Component>
   )
 }

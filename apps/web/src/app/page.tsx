@@ -2,8 +2,6 @@
 
 import {Button} from '@nanoui/core'
 import {useEffect, useState} from 'react'
-import SuccessIconSVG from './icons/SuccessIconSVG'
-import ErrorIconSVG from './icons/ErrorIconSvg'
 
 type TSize = 'sm' | 'md' | 'lg'
 
@@ -60,8 +58,9 @@ export default function Home() {
             size={size}
             onClick={getExample}
             autoResolveState={true}
-            successIcon={<SuccessIconSVG />}
-            errorIcon={<ErrorIconSVG />}
+            successIcon="./success.svg"
+            errorIcon="./error.svg"
+            variant="secondary"
           >
             Click me
           </Button>
