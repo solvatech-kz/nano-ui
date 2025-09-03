@@ -56,10 +56,10 @@ export default function Home() {
           Large
         </Button>
       </div>
-      <section className="example-section">
+      <section className="example-section example-button">
         <h2>Button example</h2>
-        <div className="example-section-item">
-          <span className="example-section-name">Auto Resolve State = true:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">With state:</span>
           <Button
             size={size}
             onClick={getExample}
@@ -71,50 +71,50 @@ export default function Home() {
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Loading:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Loading:</span>
           <Button size={size} loading={true}>
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Disabled:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Disabled:</span>
           <Button size={size} disabled>
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Primary:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Primary:</span>
           <Button size={size} variant="primary">
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Secondary:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Secondary:</span>
           <Button size={size} variant="secondary">
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Outline:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Outline:</span>
           <Button size={size} variant="outline">
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Ghost:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Ghost:</span>
           <Button size={size} variant="ghost">
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">Link:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">Link:</span>
           <Button size={size} variant="link">
             Click me
           </Button>
         </div>
-        <div className="example-section-item">
-          <span className="example-section-name">As anchor tag:</span>
+        <div className="example-button-item">
+          <span className="example-button-name">As anchor tag:</span>
           <Button size={size} variant="link" as="a" href="#">
             Click me
           </Button>

@@ -26,11 +26,6 @@
   opacity: 0.8;
 }
 
-.button-disabled {
-  background-color: var(--c-disabled-background);
-  cursor: default;
-}
-
 .button-primary {
   background-color: var(--button-primary-background);
   color: var(--button-primary-text-color);
@@ -62,6 +57,11 @@
   text-decoration: underline;
 }
 
+.button-disabled {
+  background-color: var(--c-disabled-background);
+  cursor: default;
+}
+
 .button-sm {
   padding: var(--button-padding-sm);
   font-size: var(--button-font-size-sm);
@@ -78,8 +78,9 @@
 }
 
 .button-loader {
-  display: contents;
-  border: 4px solid var(--c-white);
+  width: 18px;
+  height: 18px;
+  border: 4px solid #ccc9e7;
   border-top: 4px solid #64a6bd;
   border-radius: 50%;
   animation: spin 2s linear infinite;
@@ -109,7 +110,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--c-black);
+  background-color: inherit;
+  border-radius: inherit;
 }
 
 @keyframes spin {
