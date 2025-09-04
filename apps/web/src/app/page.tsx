@@ -1,4 +1,5 @@
 import {ButtonExample} from '@/components/ButtonExample'
+import {ProgressPreview} from '@/components/ProgressPreview'
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Progress example</h2>
+        <ProgressPreview />
       </section>
     </main>
   )
