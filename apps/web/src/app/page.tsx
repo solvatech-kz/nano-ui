@@ -8,7 +8,7 @@ export default function Home() {
       id: 2,
       icon: <img src="/vercel.svg" alt="Icon" />,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel sem sed nulla scelerisque fermentum. Integer non libero ut arcu pharetra mattis in nec velit. Nulla facilisi. Donec bibendum eros sit amet lectusmollis, at dignissim odio hendrerit',
-      multiline: false
+      multiline: true
     },
     {id: 3, icon: <img src="/vercel.svg" alt="Icon" />, text: <strong>You can even use a React element</strong>}
   ]
