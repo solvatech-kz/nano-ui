@@ -1,5 +1,7 @@
 import {Button, List} from '@nanoui/core'
 import {ProgressPreview} from '@/components/ProgressPreview'
+import styles from '@/components/ListPreview/ListPreview.module.css'
+import '@/components/ListPreview/ListPreview.css'
 
 export default function Home() {
   const items = [
@@ -41,8 +43,8 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>List example</h2>
-        <List items={items} />
-        <List items={orderedItems} />
+        <List items={items} className="list-demo" />
+        <List items={orderedItems} className={styles.myList} />
         <List items={orderedItems} ordered={false} />
       </section>
       <section className="example-section">
