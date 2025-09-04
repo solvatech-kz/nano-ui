@@ -1,5 +1,6 @@
 import {Button} from '@nanoui/core'
 import {ProgressPreview} from '@/components/ProgressPreview'
+import {TooltipPreview} from '@/components/TooltipPreview'
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>
+        <TooltipPreview />
       </section>
       <section className="example-section">
         <h2>File Uploader example</h2>

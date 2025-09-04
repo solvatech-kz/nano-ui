@@ -1,0 +1,145 @@
+.wrapper {
+  /*background: red;*/
+}
+
+.anchor {
+  display: inline-block;
+  position: relative;
+
+  section:has(&) {
+    position: relative;
+  }
+}
+
+.tooltip {
+  --tooltip-background-color: #000b;
+  --tooltip-text-color: #fff;
+  --tooltip-padding: 1rem;
+  --tooltip-border-radius: 1rem;
+  --tooltip-margin: 0.25rem;
+  --tooltip-spike-size: 0.25rem;
+  --delay: 300ms;
+
+  background-color: var(--tooltip-background-color);
+  color: var(--tooltip-text-color);
+  padding: var(--tooltip-padding);
+  border-radius: var(--tooltip-border-radius);
+
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.top,
+.bottom {
+  /*left: 50%;*/
+  transform: translateX(-50%);
+}
+
+.left,
+.right {
+  /*top: 50%;*/
+  transform: translateY(-50%);
+}
+
+.top,
+.bottom,
+.left,
+.right {
+  &::before,
+  &::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    width: var(--tooltip-spike-size);
+    height: var(--tooltip-spike-size);
+  }
+}
+
+.top {
+  /*bottom: calc(100% + var(--tooltip-spike-size) + var(--tooltip-margin));*/
+
+  &::before {
+    top: 100%;
+    border-top: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-right: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-left: var(--tooltip-spike-size) solid transparent;
+    border-bottom: var(--tooltip-spike-size) solid transparent;
+    right: 50%;
+  }
+
+  &::after {
+    top: 100%;
+    border-top: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-left: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-right: var(--tooltip-spike-size) solid transparent;
+    border-bottom: var(--tooltip-spike-size) solid transparent;
+    left: 50%;
+  }
+}
+
+.bottom {
+  /*top: calc(100% + var(--tooltip-spike-size) + var(--tooltip-margin));*/
+
+  &::before {
+    bottom: 100%;
+    border-right: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-bottom: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-left: var(--tooltip-spike-size) solid transparent;
+    border-top: var(--tooltip-spike-size) solid transparent;
+    right: 50%;
+  }
+
+  &::after {
+    bottom: 100%;
+    border-left: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-bottom: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-right: var(--tooltip-spike-size) solid transparent;
+    border-top: var(--tooltip-spike-size) solid transparent;
+    left: 50%;
+  }
+}
+
+.left {
+  /*right: calc(100% + var(--tooltip-spike-size) + var(--tooltip-margin));*/
+
+  &::before {
+    left: 100%;
+    border-left: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-bottom: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-right: var(--tooltip-spike-size) solid transparent;
+    border-top: var(--tooltip-spike-size) solid transparent;
+    bottom: 50%;
+  }
+
+  &::after {
+    left: 100%;
+    border-left: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-top: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-right: var(--tooltip-spike-size) solid transparent;
+    border-bottom: var(--tooltip-spike-size) solid transparent;
+    top: 50%;
+  }
+}
+
+.right {
+  /*left: calc(100% + var(--tooltip-spike-size) + var(--tooltip-margin));*/
+
+  &::before {
+    right: 100%;
+    border-right: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-bottom: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-left: var(--tooltip-spike-size) solid transparent;
+    border-top: var(--tooltip-spike-size) solid transparent;
+    bottom: 50%;
+  }
+
+  &::after {
+    right: 100%;
+    border-right: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-top: var(--tooltip-spike-size) solid var(--tooltip-background-color);
+    border-left: var(--tooltip-spike-size) solid transparent;
+    border-bottom: var(--tooltip-spike-size) solid transparent;
+    top: 50%;
+  }
+}
