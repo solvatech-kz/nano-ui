@@ -50,7 +50,15 @@ export const ButtonExample = () => {
           successIcon="./success.svg"
           errorIcon="./error.svg"
           variant="secondary"
+          icon="./success.svg"
+          iconPosition="left"
         >
+          Click me
+        </Button>
+      </div>
+      <div className={styles['button-example-item']}>
+        <span className={styles['button-example-name']}>With icon:</span>
+        <Button size={size} variant="secondary" icon="./success.svg">
           Click me
         </Button>
       </div>
@@ -98,7 +106,7 @@ export const ButtonExample = () => {
       </div>
       <div className={styles['button-example-item']}>
         <span className={styles['button-example-name']}>As anchor tag:</span>
-        <Button size={size} variant="link" as="a" href="#">
+        <Button size={size} as="a" href="#">
           Click me
         </Button>
       </div>

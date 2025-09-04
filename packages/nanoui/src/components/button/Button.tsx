@@ -36,7 +36,7 @@ const ButtonStateWrapper: FC<{children: ReactNode}> = ({children}) => (
 
 const Icon: FC<{iconPath: string}> = ({iconPath}) => {
   if (!iconPath) return null
-  return <img src={iconPath} alt="" />
+  return <img className={styles['button-icon']} src={iconPath} alt="" />
 }
 
 export const Button = <C extends ElementType = 'button'>({

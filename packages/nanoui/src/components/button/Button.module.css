@@ -1,7 +1,9 @@
 .button-base {
   --c-black: #0f1108;
+  --c-blue: #2374ab;
   --c-white: #f4f4ed;
   --c-disabled-background: #b2b2b2;
+
   --button-primary-background: var(--c-black);
   --button-secondary-background: var(--c-white);
   --button-primary-text-color: var(--c-white);
@@ -10,12 +12,15 @@
 
   --button-padding-sm: 8px 10px;
   --button-padding-md: 10px 14px;
-  --button-padding-lg: 14px 16px;
+  --button-padding-lg: 14px 18px;
 
   --button-font-size-sm: 12px;
   --button-font-size-md: 16px;
   --button-font-size-lg: 20px;
 
+  display: flex;
+  gap: 4px;
+  align-items: center;
   position: relative;
   border-radius: var(--button-border-radius);
   cursor: pointer;
@@ -24,6 +29,21 @@
 
 .button-base:not(:disabled):hover {
   opacity: 0.8;
+}
+
+.button-sm {
+  padding: var(--button-padding-sm);
+  font-size: var(--button-font-size-sm);
+}
+
+.button-md {
+  padding: var(--button-padding-md);
+  font-size: var(--button-font-size-md);
+}
+
+.button-lg {
+  padding: var(--button-padding-lg);
+  font-size: var(--button-font-size-lg);
 }
 
 .button-primary {
@@ -45,12 +65,14 @@
 }
 
 .button-ghost {
+  padding: 0;
   background-color: transparent;
   border: none;
   color: var(--button-primary-text-color);
 }
 
 .button-link {
+  padding: 0;
   background-color: transparent;
   border: none;
   color: var(--button-primary-text-color);
@@ -62,26 +84,11 @@
   cursor: default;
 }
 
-.button-sm {
-  padding: var(--button-padding-sm);
-  font-size: var(--button-font-size-sm);
-}
-
-.button-md {
-  padding: var(--button-padding-md);
-  font-size: var(--button-font-size-md);
-}
-
-.button-lg {
-  padding: var(--button-padding-lg);
-  font-size: var(--button-font-size-lg);
-}
-
 .button-loader {
   width: 18px;
   height: 18px;
   border: 4px solid #ccc9e7;
-  border-top: 4px solid #64a6bd;
+  border-top: 4px solid var(--c-blue);
   border-radius: 50%;
   animation: spin 2s linear infinite;
 }
@@ -96,9 +103,9 @@
   bottom: 0;
 }
 
-.button-state svg {
-  width: inherit;
-  height: inherit;
+.button-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .button-state-wrapper {
