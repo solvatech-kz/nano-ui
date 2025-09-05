@@ -32,7 +32,7 @@ export default function Home() {
       <h1>Hello NanoUI</h1>
       <section className="example-section">
         <h2>Button example</h2>
-        <Button>Click me</Button>
+        <ButtonExample />
       </section>
       <section className="example-section">
         <h2>Switch example</h2>
