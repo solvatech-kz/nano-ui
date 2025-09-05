@@ -1,8 +1,7 @@
 'use client'
 
-import {type FC, useState, useCallback} from 'react';
+import {type FC, useState, useCallback, CSSProperties } from 'react';
 import styles from './Switch.module.css';
-import {CSSProperties} from 'react';
 
 interface SwitchProps {
   checked?: boolean;
