@@ -51,11 +51,6 @@ export const Switch:FC<SwitchProps> = ({checked,
     }
   }, [currentChecked, disabled, locked, isControlled, onChange]);
   return (
-  //   <label className="switch" style={styles}>
-  //     <input className={styles[size]} type="checkbox" onChange={(e)=> onChange?.(e.target.checked)} checked={defaultChecked}  />
-  //     <span className="slider"></span>
-  // </label>
-
     <button
       type="button"
       role="switch"
