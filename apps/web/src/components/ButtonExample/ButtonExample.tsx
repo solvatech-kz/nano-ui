@@ -23,6 +23,7 @@ export const ButtonExample = () => {
         return json
       })
       .catch((error) => {
+        console.log(error)
         setState('error')
       })
   }

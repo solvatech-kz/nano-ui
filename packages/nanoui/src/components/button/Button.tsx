@@ -5,7 +5,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export interface ButtonBaseProps<C extends ElementType> {
   as?: C
-  autoResolveState?: boolean
+  // autoResolveState?: boolean
   className?: string
   disabled?: boolean
   errorIcon?: string
@@ -41,7 +41,7 @@ const Icon: FC<{iconPath: string}> = ({iconPath}) => {
 
 export const Button = <C extends ElementType = 'button'>({
   as,
-  autoResolveState = false,
+  // autoResolveState = false,
   children,
   className,
   disabled = false,
@@ -58,6 +58,8 @@ export const Button = <C extends ElementType = 'button'>({
   ...props
 }: ButtonProps<C>) => {
   const Component = as || 'button'
+
+  //
 
   const getClassName = () => {
     let returnClassName = `${styles['button-base']} ${styles[`button-${variant}`]} ${styles[`button-${size}`]}`
