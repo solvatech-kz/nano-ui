@@ -13,7 +13,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Switch example</h2>
-        <Switch size="sm" />
+        <Switch size="lg"/>
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>

@@ -1,8 +1,8 @@
 'use client'
 
-import {type FC, useState, useCallback} from 'react'
-import styles from './Switch.module.css'
-import {CSSProperties} from 'react'
+import {type FC, useState, useCallback} from 'react';
+import styles from './Switch.module.css';
+import {CSSProperties} from 'react';
 
 interface SwitchProps {
   checked?: boolean;
@@ -23,14 +23,14 @@ export const Switch: FC<SwitchProps> = ({
   onChange,
   disabled = false,
   className,
-  style
+  style,
 }) => {
   const isControlled = checked !== undefined
   const [internalChecked, setInternalChecked] = useState(defaultChecked)
   const currentChecked = locked ? true : isControlled ? checked : internalChecked
 
   const handleClick = useCallback(() => {
-    if (disabled || locked) return
+    if (disabled || locked) return;
 
     if (isControlled) {
       onChange?.(!currentChecked)
