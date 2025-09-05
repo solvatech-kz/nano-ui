@@ -18,7 +18,7 @@ export const Switch: FC<SwitchProps> = ({
   checked,
   defaultChecked = false,
   locked = false,
-  size = 'md',
+  size='lg',
   onChange,
   disabled = false,
   className,
@@ -26,7 +26,7 @@ export const Switch: FC<SwitchProps> = ({
 }) => {
   const isControlled = checked !== undefined
   const [internalChecked, setInternalChecked] = useState(defaultChecked)
-  const currentChecked = locked ? true : isControlled ? checked : internalChecked
+  const currentChecked = locked || (isControlled ? checked : internalChecked);
 
   const handleClick = useCallback(() => {
     if (disabled || locked) return;

@@ -1,5 +1,5 @@
 import {Button, List} from '@nanoui/core'
-import {Switch} from '@nanoui/core/src/components/switch'
+import {Switch} from '@nanoui/core';
 import {ProgressPreview} from '@/components/ProgressPreview'
 import styles from '@/components/ListPreview/ListPreview.module.css'
 import '@/components/ListPreview/ListPreview.css'
@@ -35,7 +35,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Switch example</h2>
-        <Switch size="lg"/>
+        <Switch disabled />
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>
