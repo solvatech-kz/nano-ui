@@ -1,5 +1,5 @@
-import {List} from '@nanoui/core'
-import {ButtonExample} from '@/components/ButtonExample'
+import {Button, List} from '@nanoui/core'
+import {Switch} from '@nanoui/core';
 import {ProgressPreview} from '@/components/ProgressPreview'
 import styles from '@/components/ListPreview/ListPreview.module.css'
 import '@/components/ListPreview/ListPreview.css'
@@ -31,10 +31,11 @@ export default function Home() {
       <h1>Hello NanoUI</h1>
       <section className="example-section">
         <h2>Button example</h2>
-        <ButtonExample />
+        <Button>Click me</Button>
       </section>
       <section className="example-section">
         <h2>Switch example</h2>
+        <Switch disabled />
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>
