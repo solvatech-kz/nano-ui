@@ -1,0 +1,39 @@
+.progress {
+  --sm: 0.25rem;
+  --md: 0.5rem;
+  --lg: 1rem;
+  --progress-value: 0%;
+  --progress-fill-color: var(--foreground);
+  --progress-background-color: #0002;
+  --progress-background-color: color-mix(in hsl, var(--foreground) 17%, transparent);
+  --progress-line-height: var(--md);
+
+  position: relative;
+  overflow: hidden;
+  background-color: var(--progress-background-color);
+  height: var(--progress-line-height);
+  width: calc(100% - 40px);
+  border-radius: var(--lg);
+}
+
+.progress::after {
+  content: "";
+  position: absolute;
+  background-color: var(--progress-fill-color);
+  height: 100%;
+  width: var(--progress-value);
+  border-radius: var(--lg);
+  transition: width 0.5s;
+}
+
+.sm {
+  --progress-line-height: var(--sm);
+}
+
+.md {
+  --progress-line-height: var(--md);
+}
+
+.lg {
+  --progress-line-height: var(--lg);
+}
