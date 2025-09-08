@@ -49,6 +49,16 @@ const Tooltip: FC<TooltipProps> = ({
     visibility: definedPosition ? 'visible' : 'hidden',
     opacity: definedPosition ? 1 : 0
   }
+  const getOffset = () => {
+    if (tooltipRef.current) {
+      const tooltipStyle = window.getComputedStyle(tooltipRef.current)
+      return (
+        16 *
+        (parseFloat('0' + tooltipStyle.getPropertyValue('--tooltip-spike-size')) +
+          parseFloat('0' + tooltipStyle.getPropertyValue('--tooltip-margin')))
+      )
+    } else return 0
+  }
 
   useEffect(() => {
     if (container === undefined) setContainerState(document.body)
@@ -62,8 +72,8 @@ const Tooltip: FC<TooltipProps> = ({
   const calcPlacement = useCallback(() => {
     const anchorRect = anchorRef.current?.getBoundingClientRect()
     const tooltipRect = tooltipRef.current?.getBoundingClientRect()
-    const height = tooltipRect ? tooltipRect['height'] : null
-    const width = tooltipRect ? tooltipRect['width'] : null
+    const height = tooltipRect ? tooltipRect['height'] + getOffset() : null
+    const width = tooltipRect ? tooltipRect['width'] + getOffset() : null
 
     if (anchorRect && height && width) {
       const positionMods: Record<
@@ -90,7 +100,7 @@ const Tooltip: FC<TooltipProps> = ({
           toPosition: 'left'
         }
       }
-      if (positionMods[position].switchCondition()) setFinalPosition(() => positionMods[position].toPosition)
+      if (positionMods[position].switchCondition()) setFinalPosition(positionMods[position].toPosition)
     }
   }, [position])
 
@@ -104,11 +114,6 @@ const Tooltip: FC<TooltipProps> = ({
       let anchorRect = anchorRef.current?.getBoundingClientRect()
       let tooltipRect = tooltipRef.current?.getBoundingClientRect()
       if (anchorRef.current && tooltipRef.current && anchorRect && tooltipRect) {
-        const tooltipStyle = window.getComputedStyle(tooltipRef.current)
-        const offset =
-          16 *
-          (parseFloat('0' + tooltipStyle.getPropertyValue('--tooltip-spike-size')) +
-            parseFloat('0' + tooltipStyle.getPropertyValue('--tooltip-margin')))
         let x, y
         let offsetParent = tooltipRef.current.offsetParent ?? document.documentElement
         if (window.getComputedStyle(offsetParent).position === 'static') {
@@ -122,24 +127,24 @@ const Tooltip: FC<TooltipProps> = ({
         switch (finalPosition) {
           case 'top':
             x = x + anchorRect.width / 2
-            y = y - tooltipRect.height - offset
+            y = y - tooltipRect.height - getOffset()
             tooltipRect = tooltipRef.current.getBoundingClientRect()
             y = y + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'bottom':
             x = x + anchorRect.width / 2
-            y = y + anchorRect.height + offset
+            y = y + anchorRect.height + getOffset()
             tooltipRect = tooltipRef.current.getBoundingClientRect()
             y = y - (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'left':
-            x = x - tooltipRect.width - offset
+            x = x - tooltipRect.width - getOffset()
             y = y + anchorRect.height / 2
             tooltipRect = tooltipRef.current.getBoundingClientRect()
             x = x + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'right':
-            x = x + anchorRect.width + offset
+            x = x + anchorRect.width + getOffset()
             y = y + anchorRect.height / 2
             tooltipRect = tooltipRef.current.getBoundingClientRect()
             x = x - (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
