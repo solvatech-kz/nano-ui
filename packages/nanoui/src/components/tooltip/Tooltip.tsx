@@ -37,11 +37,11 @@ const Tooltip: FC<TooltipProps> = ({
 }) => {
   const anchorRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
-  const [finalPosition, setFinalPosition] = useState(position)
+  const [positionStyle, setPositionStyle] = useState<typeof position>(position)
   const [containerState, setContainerState] = useState<HTMLElement | undefined>(container)
   const [visible, setVisible] = useState(false)
   const [definedPosition, setDefinedPosition] = useState(false)
-  const classNames = [className, styles.tooltip, styles[finalPosition]].join(' ').trim()
+  const classNames = [className, styles.tooltip, styles[positionStyle]].join(' ').trim()
   const tooltipId = useId()
 
   const visibleStyles = {
@@ -66,7 +66,7 @@ const Tooltip: FC<TooltipProps> = ({
   }, [container])
 
   useEffect(() => {
-    setFinalPosition(position)
+    setPositionStyle(position)
   }, [position])
 
   const calcPlacement = useCallback(() => {
@@ -100,7 +100,8 @@ const Tooltip: FC<TooltipProps> = ({
           toPosition: 'left'
         }
       }
-      if (positionMods[position].switchCondition()) setFinalPosition(positionMods[position].toPosition)
+      if (positionMods[position].switchCondition()) return positionMods[position].toPosition
+      else return position
     }
   }, [position])
 
@@ -110,7 +111,8 @@ const Tooltip: FC<TooltipProps> = ({
 
   useEffect(() => {
     if (visible) {
-      calcPlacement()
+      const finalPosition = calcPlacement()
+      setPositionStyle(finalPosition!)
       let anchorRect = anchorRef.current?.getBoundingClientRect()
       let tooltipRect = tooltipRef.current?.getBoundingClientRect()
       if (anchorRef.current && tooltipRef.current && anchorRect && tooltipRect) {
@@ -176,14 +178,14 @@ const Tooltip: FC<TooltipProps> = ({
       tooltipRef.current?.setAttribute('aria-hidden', 'true')
       setDefinedPosition(false)
     }
-  }, [calcPlacement, delay, visible, isVisible, finalPosition])
+  }, [calcPlacement, delay, visible, isVisible])
 
   const showTooltip = () => {
     if (isVisible === undefined) setVisible(true)
   }
 
   const hideTooltip = () => {
-    setFinalPosition(() => position)
+    setPositionStyle(() => position)
     setDefinedPosition(false)
     if (isVisible === undefined) setVisible(false)
   }
