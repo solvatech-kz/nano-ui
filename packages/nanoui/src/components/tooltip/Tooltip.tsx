@@ -41,7 +41,7 @@ const Tooltip: FC<TooltipProps> = ({
   const [containerState, setContainerState] = useState<HTMLElement | undefined>(container)
   const [visible, setVisible] = useState(false)
   const [definedPosition, setDefinedPosition] = useState(false)
-  const classNames = [className, styles.tooltip, styles[finalPosition]].join(' ')
+  const classNames = [className, styles.tooltip, styles[finalPosition]].join(' ').trim()
   const tooltipId = useId()
 
   const visibleStyles = {
