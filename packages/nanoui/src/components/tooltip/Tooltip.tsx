@@ -124,36 +124,47 @@ const Tooltip: FC<TooltipProps> = ({
           x = anchorRect.left - offsetRect.left
           y = anchorRect.top - offsetRect.top
         }
+
+        const updatePosition = (x: number, y: number) => {
+          if (tooltipRef.current) {
+            tooltipRef.current.style.left = `${x}px`
+            tooltipRef.current.style.top = `${y}px`
+            tooltipRect = tooltipRef.current.getBoundingClientRect()
+          }
+        }
+
         switch (finalPosition) {
           case 'top':
             x = x + anchorRect.width / 2
             y = y - tooltipRect.height - getOffset()
-            tooltipRect = tooltipRef.current.getBoundingClientRect()
+            updatePosition(x, y)
             y = y + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'bottom':
             x = x + anchorRect.width / 2
             y = y + anchorRect.height + getOffset()
-            tooltipRect = tooltipRef.current.getBoundingClientRect()
-            y = y - (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
+            updatePosition(x, y)
+            y =
+              y -
+              (tooltipRect[finalPosition] > window.innerHeight ? tooltipRect[finalPosition] - window.innerHeight : 0)
             break
           case 'left':
             x = x - tooltipRect.width - getOffset()
             y = y + anchorRect.height / 2
-            tooltipRect = tooltipRef.current.getBoundingClientRect()
+            updatePosition(x, y)
             x = x + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'right':
             x = x + anchorRect.width + getOffset()
             y = y + anchorRect.height / 2
-            tooltipRect = tooltipRef.current.getBoundingClientRect()
-            x = x - (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
+            updatePosition(x, y)
+            x =
+              x - (tooltipRect[finalPosition] > window.innerWidth ? tooltipRect[finalPosition] - window.innerWidth : 0)
             break
           default:
             break
         }
-        tooltipRef.current.style.left = `${x}px`
-        tooltipRef.current.style.top = `${y}px`
+        updatePosition(x, y)
         tooltipRef.current.style.right = 'auto'
         tooltipRef.current.style.bottom = 'auto'
         tooltipRef.current.setAttribute('aria-hidden', 'false')
@@ -173,6 +184,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   const hideTooltip = () => {
     setFinalPosition(() => position)
+    setDefinedPosition(false)
     if (isVisible === undefined) setVisible(false)
   }
 
