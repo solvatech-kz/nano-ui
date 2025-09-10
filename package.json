@@ -27,5 +27,8 @@
     "overrides": {
       "source-map": "0.7.4"
     }
+  },
+  "dependencies": {
+    "pnpm": "^10.15.0"
   }
 }
