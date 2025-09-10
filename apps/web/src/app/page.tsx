@@ -1,6 +1,7 @@
 import {List} from '@nanoui/core'
 import {ButtonExample} from '@/components/ButtonExample'
 import {ProgressPreview} from '@/components/ProgressPreview'
+import {TooltipPreview} from '@/components/TooltipPreview'
 import styles from '@/components/ListPreview/ListPreview.module.css'
 import '@/components/ListPreview/ListPreview.css'
 
@@ -38,6 +39,7 @@ export default function Home() {
       </section>
       <section className="example-section">
         <h2>Tooltip example</h2>
+        <TooltipPreview />
       </section>
       <section className="example-section">
         <h2>File Uploader example</h2>
