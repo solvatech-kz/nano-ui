@@ -9,7 +9,6 @@ import {
   useEffect,
   useState,
   useId,
-  useCallback
 } from 'react'
 import {createPortal} from 'react-dom'
 import styles from './Tooltip.module.css'
@@ -44,7 +43,7 @@ const Tooltip: FC<TooltipProps> = ({
   const classNames = [className, styles.tooltip, styles[positionStyle]].join(' ').trim()
   const tooltipId = useId()
 
-  const visibleStyles = {
+  const visibleStyles: CSSProperties = {
     transition: definedPosition ? `opacity 375ms ${delay}ms` : 'none',
     visibility: definedPosition ? 'visible' : 'hidden',
     opacity: definedPosition ? 1 : 0
@@ -61,52 +60,15 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   useEffect(() => {
-    if (container === undefined) setContainerState(document.body)
-    else setContainerState(container)
+    setContainerState(container ?? document.body)
   }, [container])
 
   useEffect(() => {
     setPositionStyle(position)
   }, [position])
 
-  const calcPlacement = useCallback(() => {
-    const anchorRect = anchorRef.current?.getBoundingClientRect()
-    const tooltipRect = tooltipRef.current?.getBoundingClientRect()
-    const height = tooltipRect ? tooltipRect['height'] + getOffset() : null
-    const width = tooltipRect ? tooltipRect['width'] + getOffset() : null
-
-    if (anchorRect && height && width) {
-      const positionMods: Record<
-        typeof position,
-        {
-          switchCondition: () => boolean
-          toPosition: typeof position
-        }
-      > = {
-        top: {
-          switchCondition: () => height > anchorRect[position],
-          toPosition: 'bottom'
-        },
-        bottom: {
-          switchCondition: () => height > window.innerHeight - anchorRect[position],
-          toPosition: 'top'
-        },
-        left: {
-          switchCondition: () => width > anchorRect[position],
-          toPosition: 'right'
-        },
-        right: {
-          switchCondition: () => width > window.innerWidth - anchorRect[position],
-          toPosition: 'left'
-        }
-      }
-      if (positionMods[position].switchCondition()) return positionMods[position].toPosition
-      else return position
-    }
-  }, [position])
-
   useEffect(() => {
-    if (isVisible !== undefined) setVisible(isVisible)
+    setVisible(v => isVisible ?? v)
   }, [isVisible])
 
   useEffect(() => {
@@ -152,15 +114,15 @@ const Tooltip: FC<TooltipProps> = ({
       let anchorRect = anchorRef.current?.getBoundingClientRect()
       let tooltipRect = tooltipRef.current?.getBoundingClientRect()
       if (anchorRef.current && tooltipRef.current && anchorRect && tooltipRect) {
-        let x, y
+        let x = anchorRect.left, y = anchorRect.top
         let offsetParent = tooltipRef.current.offsetParent ?? document.documentElement
         if (window.getComputedStyle(offsetParent).position === 'static') {
-          x = anchorRect.left + window.scrollX
-          y = anchorRect.top + window.scrollY
+          x += window.scrollX
+          y += window.scrollY
         } else {
           const offsetRect = offsetParent.getBoundingClientRect()
-          x = anchorRect.left - offsetRect.left
-          y = anchorRect.top - offsetRect.top
+          x -= offsetRect.left
+          y -= offsetRect.top
         }
 
         const updatePosition = (x: number, y: number) => {
@@ -213,8 +175,9 @@ const Tooltip: FC<TooltipProps> = ({
     } else {
       tooltipRef.current?.setAttribute('aria-hidden', 'true')
       setDefinedPosition(false)
+      setPositionStyle(() => position)
     }
-  }, [position, delay, visible, isVisible])
+  }, [position, visible, isVisible])
 
   const showTooltip = () => {
     if (isVisible === undefined) setVisible(true)
@@ -223,8 +186,6 @@ const Tooltip: FC<TooltipProps> = ({
   const hideTooltip = () => {
     if (isVisible === undefined) {
       setVisible(false)
-      setDefinedPosition(false)
-      setPositionStyle(() => position)
     }
   }
 
@@ -241,15 +202,14 @@ const Tooltip: FC<TooltipProps> = ({
       >
         {children}
       </div>
-      {containerState &&
-        (visible || isVisible) &&
+      {containerState && visible &&
         createPortal(
           <div
             className={classNames}
             id={tooltipId}
             ref={tooltipRef}
             role="tooltip"
-            style={{...visibleStyles, ...style} as CSSProperties}
+            style={{...visibleStyles, ...style}}
           >
             {content}
           </div>,
