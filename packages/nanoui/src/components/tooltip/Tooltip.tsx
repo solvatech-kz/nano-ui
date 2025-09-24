@@ -167,13 +167,11 @@ const Tooltip: FC<TooltipProps> = ({
         updatePosition(x, y)
         tooltipRef.current.style.right = 'auto'
         tooltipRef.current.style.bottom = 'auto'
-        tooltipRef.current.setAttribute('aria-hidden', 'false')
         setDefinedPosition(true)
       } else {
         console.log('Error: Element not initialized')
       }
     } else {
-      tooltipRef.current?.setAttribute('aria-hidden', 'true')
       setDefinedPosition(false)
       setPositionStyle(() => position)
     }
@@ -205,6 +203,7 @@ const Tooltip: FC<TooltipProps> = ({
       {containerState && visible &&
         createPortal(
           <div
+            aria-hidden={!visible}
             className={classNames}
             id={tooltipId}
             ref={tooltipRef}
