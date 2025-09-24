@@ -111,6 +111,42 @@ const Tooltip: FC<TooltipProps> = ({
 
   useEffect(() => {
     if (visible) {
+      const calcPlacement = () => {
+        const anchorRect = anchorRef.current?.getBoundingClientRect()
+        const tooltipRect = tooltipRef.current?.getBoundingClientRect()
+        const height = tooltipRect ? tooltipRect['height'] + getOffset() : null
+        const width = tooltipRect ? tooltipRect['width'] + getOffset() : null
+
+        if (anchorRect && height && width) {
+          const positionMods: Record<
+            typeof position,
+            {
+              switchCondition: () => boolean
+              toPosition: typeof position
+            }
+          > = {
+            top: {
+              switchCondition: () => height > anchorRect[position],
+              toPosition: 'bottom'
+            },
+            bottom: {
+              switchCondition: () => height > window.innerHeight - anchorRect[position],
+              toPosition: 'top'
+            },
+            left: {
+              switchCondition: () => width > anchorRect[position],
+              toPosition: 'right'
+            },
+            right: {
+              switchCondition: () => width > window.innerWidth - anchorRect[position],
+              toPosition: 'left'
+            }
+          }
+          if (positionMods[position].switchCondition()) return positionMods[position].toPosition
+          else return position
+        }
+      }
+
       const finalPosition = calcPlacement()
       setPositionStyle(finalPosition!)
       let anchorRect = anchorRef.current?.getBoundingClientRect()
@@ -178,7 +214,7 @@ const Tooltip: FC<TooltipProps> = ({
       tooltipRef.current?.setAttribute('aria-hidden', 'true')
       setDefinedPosition(false)
     }
-  }, [calcPlacement, delay, visible, isVisible])
+  }, [position, delay, visible, isVisible])
 
   const showTooltip = () => {
     if (isVisible === undefined) setVisible(true)
