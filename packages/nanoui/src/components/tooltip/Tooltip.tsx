@@ -165,8 +165,6 @@ const Tooltip: FC<TooltipProps> = ({
             break
         }
         updatePosition(x, y)
-        tooltipRef.current.style.right = 'auto'
-        tooltipRef.current.style.bottom = 'auto'
         setDefinedPosition(true)
       } else {
         console.log('Error: Element not initialized')
