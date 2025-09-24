@@ -185,9 +185,11 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   const hideTooltip = () => {
-    setPositionStyle(() => position)
-    setDefinedPosition(false)
-    if (isVisible === undefined) setVisible(false)
+    if (isVisible === undefined) {
+      setVisible(false)
+      setDefinedPosition(false)
+      setPositionStyle(() => position)
+    }
   }
 
   return (
