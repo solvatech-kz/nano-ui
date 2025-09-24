@@ -190,6 +190,7 @@ const Tooltip: FC<TooltipProps> = ({
   return (
     <>
       <div
+        aria-describedby={visible ? tooltipId : undefined}
         className={styles.anchor}
         ref={anchorRef}
         onMouseEnter={showTooltip}
