@@ -1,0 +1,53 @@
+.select {
+  margin-bottom: 0.5rem;
+
+  & > div > div[aria-selected="true"] {
+    font-weight: 700;
+  }
+}
+
+.select-settings {
+  display: flex;
+  margin: 0.5rem 0;
+  gap: 2rem;
+}
+
+.select-settings__values {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  grid-auto-rows: min-content;
+  max-width: 50%;
+  gap: 0.25rem;
+
+  & > button {
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+.select-settings__options {
+  display: inline-block;
+
+  & > div {
+    display: flex;
+
+    & > * {
+      position: relative;
+    }
+
+    & > label {
+      order: 2;
+      right: 50%;
+      margin-right: 0.5rem;
+    }
+
+    & > .select-settings__select {
+      order: 1;
+      left: 50%;
+      margin-right: auto;
+
+      &:first-of-type {
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
