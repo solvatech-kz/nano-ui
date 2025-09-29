@@ -1,0 +1,62 @@
+.select {
+  --select-border: var(--foreground);
+  --select-bg: color-mix(in hsl, var(--background), black 10%);
+  --select-color: var(--foreground);
+  --select-hover-bg: color-mix(in hsl, var(--select-bg), black 10%);
+
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+
+  appearance: none;
+  color: var(--select-color);
+  background-color: var(--select-bg);
+  border: 1px solid var(--select-border);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.75rem;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: var(--select-hover-bg);
+
+    &:has(*:hover) {
+      background-color: var(--select-bg);
+    }
+
+    & > * {
+      background-color: var(--select-bg);
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: contrast(75%);
+  }
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25rem;
+  background-color: var(--select-bg);
+  box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.25);
+
+  & > div {
+    box-sizing: content-box;
+    min-height: 1lh;
+    padding: 0.25rem 0.75rem;
+    text-align: start;
+
+    &:hover {
+      background-color: var(--select-hover-bg);
+    }
+  }
+}

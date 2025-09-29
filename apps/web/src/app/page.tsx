@@ -6,6 +6,7 @@ import {ProgressPreview} from '@/components/ProgressPreview'
 import {TooltipPreview} from '@/components/TooltipPreview'
 import styles from '@/components/ListPreview/ListPreview.module.css'
 import '@/components/ListPreview/ListPreview.css'
+import {SelectPreview} from '@/components/SelectPreview'
 
 export default function Home() {
   const items = [
@@ -56,6 +57,10 @@ export default function Home() {
       <section className="example-section">
         <h2>Progress example</h2>
         <ProgressPreview />
+      </section>
+      <section className="example-section">
+        <h2>Select example</h2>
+        <SelectPreview />
       </section>
     </main>
   )
