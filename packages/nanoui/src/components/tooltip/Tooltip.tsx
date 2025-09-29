@@ -39,6 +39,7 @@ const Tooltip: FC<TooltipProps> = ({
   ]
     .join(' ')
     .trim()
+  const fillerClassNames = [styles.filler, styles[positionStyle]].join(' ').trim()
   const tooltipId = useId()
 
   const getOffset = () => {
@@ -199,9 +200,11 @@ const Tooltip: FC<TooltipProps> = ({
             ref={tooltipRef}
             role="tooltip"
             style={style}
-
+            onMouseEnter={showTooltip}
+            onMouseLeave={hideTooltip}
           >
             {content}
+            <div className={fillerClassNames} />
           </div>,
           containerState
         )}
