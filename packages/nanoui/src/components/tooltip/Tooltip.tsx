@@ -1,15 +1,6 @@
 'use client'
 
-import {
-  type FC,
-  type CSSProperties,
-  type ReactElement,
-  type ReactNode,
-  useRef,
-  useEffect,
-  useState,
-  useId,
-} from 'react'
+import {type FC, type CSSProperties, type ReactElement, type ReactNode, useRef, useEffect, useState, useId} from 'react'
 import {createPortal} from 'react-dom'
 import styles from './Tooltip.module.css'
 
@@ -40,14 +31,16 @@ const Tooltip: FC<TooltipProps> = ({
   const [containerState, setContainerState] = useState<HTMLElement | undefined>(container)
   const [visible, setVisible] = useState(false)
   const [definedPosition, setDefinedPosition] = useState(false)
-  const classNames = [className, styles.tooltip, styles[positionStyle]].join(' ').trim()
+  const classNames = [
+    className,
+    styles.tooltip,
+    styles[positionStyle],
+    definedPosition ? styles.visible : styles.hidden
+  ]
+    .join(' ')
+    .trim()
   const tooltipId = useId()
 
-  const visibleStyles: CSSProperties = {
-    transition: definedPosition ? `opacity 375ms ${delay}ms` : 'none',
-    visibility: definedPosition ? 'visible' : 'hidden',
-    opacity: definedPosition ? 1 : 0
-  }
   const getOffset = () => {
     if (tooltipRef.current) {
       const tooltipStyle = window.getComputedStyle(tooltipRef.current)
@@ -68,7 +61,7 @@ const Tooltip: FC<TooltipProps> = ({
   }, [position])
 
   useEffect(() => {
-    setVisible(v => isVisible ?? v)
+    setVisible((v) => isVisible ?? v)
   }, [isVisible])
 
   useEffect(() => {
@@ -114,7 +107,8 @@ const Tooltip: FC<TooltipProps> = ({
       let anchorRect = anchorRef.current?.getBoundingClientRect()
       let tooltipRect = tooltipRef.current?.getBoundingClientRect()
       if (anchorRef.current && tooltipRef.current && anchorRect && tooltipRect) {
-        let x = anchorRect.left, y = anchorRect.top
+        let x = anchorRect.left,
+          y = anchorRect.top
         let offsetParent = tooltipRef.current.offsetParent ?? document.documentElement
         if (window.getComputedStyle(offsetParent).position === 'static') {
           x += window.scrollX
@@ -165,15 +159,17 @@ const Tooltip: FC<TooltipProps> = ({
             break
         }
         updatePosition(x, y)
+        tooltipRef.current.style.setProperty('--delay', `${delay}ms`)
         setDefinedPosition(true)
       } else {
         console.log('Error: Element not initialized')
       }
     } else {
       setDefinedPosition(false)
+      tooltipRef.current?.style.removeProperty('--delay')
       setPositionStyle(() => position)
     }
-  }, [position, visible, isVisible])
+  }, [position, delay, visible, isVisible])
 
   const showTooltip = () => {
     if (isVisible === undefined) setVisible(true)
@@ -199,7 +195,8 @@ const Tooltip: FC<TooltipProps> = ({
       >
         {children}
       </div>
-      {containerState && visible &&
+      {containerState &&
+        visible &&
         createPortal(
           <div
             aria-hidden={!visible}
@@ -207,7 +204,8 @@ const Tooltip: FC<TooltipProps> = ({
             id={tooltipId}
             ref={tooltipRef}
             role="tooltip"
-            style={{...visibleStyles, ...style}}
+            style={style}
+
           >
             {content}
           </div>,

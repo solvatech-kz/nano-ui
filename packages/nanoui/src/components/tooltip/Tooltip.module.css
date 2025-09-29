@@ -3,6 +3,7 @@
 }
 
 .tooltip {
+  --delay: 300ms;
   --tooltip-background-color: #000b;
   --tooltip-text-color: #fff;
   --tooltip-padding: 1rem;
@@ -17,6 +18,18 @@
   border-radius: var(--tooltip-border-radius);
 
   position: absolute;
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 375ms var(--delay);
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hidden {
   visibility: hidden;
   opacity: 0;
 }
