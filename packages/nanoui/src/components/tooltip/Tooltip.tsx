@@ -1,16 +1,6 @@
 'use client'
 
-import {
-  type FC,
-  type CSSProperties,
-  type ReactElement,
-  type ReactNode,
-  useRef,
-  useEffect,
-  useState,
-  useId,
-  useCallback
-} from 'react'
+import {type FC, type CSSProperties, type ReactElement, type ReactNode, useRef, useEffect, useState, useId} from 'react'
 import {createPortal} from 'react-dom'
 import styles from './Tooltip.module.css'
 
@@ -41,14 +31,17 @@ const Tooltip: FC<TooltipProps> = ({
   const [containerState, setContainerState] = useState<HTMLElement | undefined>(container)
   const [visible, setVisible] = useState(false)
   const [definedPosition, setDefinedPosition] = useState(false)
-  const classNames = [className, styles.tooltip, styles[positionStyle]].join(' ').trim()
+  const classNames = [
+    className,
+    styles.tooltip,
+    styles[positionStyle],
+    definedPosition ? styles.visible : styles.hidden
+  ]
+    .join(' ')
+    .trim()
+  const fillerClassNames = [styles.filler, styles[positionStyle]].join(' ').trim()
   const tooltipId = useId()
 
-  const visibleStyles = {
-    transition: definedPosition ? `opacity 375ms ${delay}ms` : 'none',
-    visibility: definedPosition ? 'visible' : 'hidden',
-    opacity: definedPosition ? 1 : 0
-  }
   const getOffset = () => {
     if (tooltipRef.current) {
       const tooltipStyle = window.getComputedStyle(tooltipRef.current)
@@ -61,70 +54,70 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   useEffect(() => {
-    if (container === undefined) setContainerState(document.body)
-    else setContainerState(container)
+    setContainerState(container ?? document.body)
   }, [container])
 
   useEffect(() => {
     setPositionStyle(position)
   }, [position])
 
-  const calcPlacement = useCallback(() => {
-    const anchorRect = anchorRef.current?.getBoundingClientRect()
-    const tooltipRect = tooltipRef.current?.getBoundingClientRect()
-    const height = tooltipRect ? tooltipRect['height'] + getOffset() : null
-    const width = tooltipRect ? tooltipRect['width'] + getOffset() : null
-
-    if (anchorRect && height && width) {
-      const positionMods: Record<
-        typeof position,
-        {
-          switchCondition: () => boolean
-          toPosition: typeof position
-        }
-      > = {
-        top: {
-          switchCondition: () => height > anchorRect[position],
-          toPosition: 'bottom'
-        },
-        bottom: {
-          switchCondition: () => height > window.innerHeight - anchorRect[position],
-          toPosition: 'top'
-        },
-        left: {
-          switchCondition: () => width > anchorRect[position],
-          toPosition: 'right'
-        },
-        right: {
-          switchCondition: () => width > window.innerWidth - anchorRect[position],
-          toPosition: 'left'
-        }
-      }
-      if (positionMods[position].switchCondition()) return positionMods[position].toPosition
-      else return position
-    }
-  }, [position])
-
   useEffect(() => {
-    if (isVisible !== undefined) setVisible(isVisible)
+    setVisible((v) => isVisible ?? v)
   }, [isVisible])
 
   useEffect(() => {
     if (visible) {
+      const calcPlacement = () => {
+        const anchorRect = anchorRef.current?.getBoundingClientRect()
+        const tooltipRect = tooltipRef.current?.getBoundingClientRect()
+        const height = tooltipRect ? tooltipRect['height'] + getOffset() : null
+        const width = tooltipRect ? tooltipRect['width'] + getOffset() : null
+
+        if (anchorRect && height && width) {
+          const positionMods: Record<
+            typeof position,
+            {
+              switchCondition: () => boolean
+              toPosition: typeof position
+            }
+          > = {
+            top: {
+              switchCondition: () => height > anchorRect[position],
+              toPosition: 'bottom'
+            },
+            bottom: {
+              switchCondition: () => height > window.innerHeight - anchorRect[position],
+              toPosition: 'top'
+            },
+            left: {
+              switchCondition: () => width > anchorRect[position],
+              toPosition: 'right'
+            },
+            right: {
+              switchCondition: () => width > window.innerWidth - anchorRect[position],
+              toPosition: 'left'
+            }
+          }
+          if (positionMods[position].switchCondition()) return positionMods[position].toPosition
+          else return position
+        }
+      }
+
       const finalPosition = calcPlacement()
       setPositionStyle(finalPosition!)
       let anchorRect = anchorRef.current?.getBoundingClientRect()
       let tooltipRect = tooltipRef.current?.getBoundingClientRect()
       if (anchorRef.current && tooltipRef.current && anchorRect && tooltipRect) {
-        let x, y
+        let x = anchorRect.left,
+          y = anchorRect.top
         let offsetParent = tooltipRef.current.offsetParent ?? document.documentElement
         if (window.getComputedStyle(offsetParent).position === 'static') {
-          x = anchorRect.left + window.scrollX
-          y = anchorRect.top + window.scrollY
+          x += window.scrollX
+          y += window.scrollY
         } else {
           const offsetRect = offsetParent.getBoundingClientRect()
-          x = anchorRect.left - offsetRect.left
-          y = anchorRect.top - offsetRect.top
+          x -= offsetRect.left
+          y -= offsetRect.top
         }
 
         const updatePosition = (x: number, y: number) => {
@@ -139,60 +132,54 @@ const Tooltip: FC<TooltipProps> = ({
           case 'top':
             x = x + anchorRect.width / 2
             y = y - tooltipRect.height - getOffset()
-            updatePosition(x, y)
-            y = y + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'bottom':
             x = x + anchorRect.width / 2
             y = y + anchorRect.height + getOffset()
-            updatePosition(x, y)
-            y =
-              y -
-              (tooltipRect[finalPosition] > window.innerHeight ? tooltipRect[finalPosition] - window.innerHeight : 0)
             break
           case 'left':
             x = x - tooltipRect.width - getOffset()
             y = y + anchorRect.height / 2
-            updatePosition(x, y)
-            x = x + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'right':
             x = x + anchorRect.width + getOffset()
             y = y + anchorRect.height / 2
-            updatePosition(x, y)
-            x =
-              x - (tooltipRect[finalPosition] > window.innerWidth ? tooltipRect[finalPosition] - window.innerWidth : 0)
             break
           default:
             break
         }
         updatePosition(x, y)
-        tooltipRef.current.style.right = 'auto'
-        tooltipRef.current.style.bottom = 'auto'
-        tooltipRef.current.setAttribute('aria-hidden', 'false')
+        x = x - (tooltipRect.left < 0 ? tooltipRect.left : 0)
+        x = x - (tooltipRect.right > window.innerWidth ? tooltipRect.right - window.innerWidth : 0)
+        y = y - (tooltipRect.top < 0 ? tooltipRect.top : 0)
+        y = y - (tooltipRect.bottom > window.innerHeight ? tooltipRect.bottom - window.innerHeight : 0)
+        updatePosition(x, y)
+        tooltipRef.current.style.setProperty('--delay', `${delay}ms`)
         setDefinedPosition(true)
       } else {
         console.log('Error: Element not initialized')
       }
     } else {
-      tooltipRef.current?.setAttribute('aria-hidden', 'true')
       setDefinedPosition(false)
+      tooltipRef.current?.style.removeProperty('--delay')
+      setPositionStyle(() => position)
     }
-  }, [calcPlacement, delay, visible, isVisible])
+  }, [position, delay, visible, isVisible])
 
   const showTooltip = () => {
     if (isVisible === undefined) setVisible(true)
   }
 
   const hideTooltip = () => {
-    setPositionStyle(() => position)
-    setDefinedPosition(false)
-    if (isVisible === undefined) setVisible(false)
+    if (isVisible === undefined) {
+      setVisible(false)
+    }
   }
 
   return (
     <>
       <div
+        aria-describedby={visible ? tooltipId : undefined}
         className={styles.anchor}
         ref={anchorRef}
         onMouseEnter={showTooltip}
@@ -204,16 +191,20 @@ const Tooltip: FC<TooltipProps> = ({
         {children}
       </div>
       {containerState &&
-        (visible || isVisible) &&
+        visible &&
         createPortal(
           <div
+            aria-hidden={!visible}
             className={classNames}
             id={tooltipId}
             ref={tooltipRef}
             role="tooltip"
-            style={{...visibleStyles, ...style} as CSSProperties}
+            style={style}
+            onMouseEnter={showTooltip}
+            onMouseLeave={hideTooltip}
           >
             {content}
+            <div className={fillerClassNames} />
           </div>,
           containerState
         )}

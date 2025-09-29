@@ -3,6 +3,7 @@
 }
 
 .tooltip {
+  --delay: 300ms;
   --tooltip-background-color: #000b;
   --tooltip-text-color: #fff;
   --tooltip-padding: 1rem;
@@ -19,6 +20,23 @@
   position: absolute;
   visibility: hidden;
   opacity: 0;
+
+  min-width: 0;
+  min-height: 0;
+  max-width: 100dvw;
+  max-height: 100dvh;
+
+  transition: opacity 375ms var(--delay);
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .top,
@@ -31,100 +49,130 @@
   transform: translateY(-50%);
 }
 
-.top,
-.bottom,
-.left,
-.right {
-  &::before,
-  &::after {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    width: var(--tooltip-spike-size);
-    height: var(--tooltip-spike-size);
+.tooltip {
+  &.top,
+  &.bottom,
+  &.left,
+  &.right {
+    &::before,
+    &::after {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      width: var(--tooltip-spike-size);
+      height: var(--tooltip-spike-size);
+    }
   }
 }
 
-.top {
-  &::before,
-  &::after {
+.tooltip {
+  &.top {
+    &::before,
+    &::after {
+      top: 100%;
+      border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-bottom: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::before {
+      right: 50%;
+      border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-left: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::after {
+      left: 50%;
+      border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-right: var(--tooltip-spike-border) solid transparent;
+    }
+  }
+
+  &.bottom {
+    &::before,
+    &::after {
+      bottom: 100%;
+      border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-top: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::before {
+      right: 50%;
+      border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-left: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::after {
+      left: 50%;
+      border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-right: var(--tooltip-spike-border) solid transparent;
+    }
+  }
+
+  &.left {
+    &::before,
+    &::after {
+      left: 100%;
+      border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-right: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::before {
+      bottom: 50%;
+      border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-top: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::after {
+      top: 50%;
+      border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-bottom: var(--tooltip-spike-border) solid transparent;
+    }
+  }
+
+  &.right {
+    &::before,
+    &::after {
+      right: 100%;
+      border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-left: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::before {
+      bottom: 50%;
+      border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-top: var(--tooltip-spike-border) solid transparent;
+    }
+
+    &::after {
+      top: 50%;
+      border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
+      border-bottom: var(--tooltip-spike-border) solid transparent;
+    }
+  }
+}
+
+.filler {
+  position: absolute;
+  width: calc(var(--tooltip-spike-size) + var(--tooltip-margin));
+  height: calc(var(--tooltip-spike-size) + var(--tooltip-margin));
+
+  &.top {
     top: 100%;
-    border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-bottom: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::before {
-    right: 50%;
-    border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-left: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::after {
     left: 50%;
-    border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-right: var(--tooltip-spike-border) solid transparent;
   }
-}
 
-.bottom {
-  &::before,
-  &::after {
+  &.bottom {
     bottom: 100%;
-    border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-top: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::before {
-    right: 50%;
-    border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-left: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::after {
     left: 50%;
-    border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-right: var(--tooltip-spike-border) solid transparent;
   }
-}
 
-.left {
-  &::before,
-  &::after {
+  &.left {
     left: 100%;
-    border-left: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-right: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::before {
-    bottom: 50%;
-    border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-top: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::after {
     top: 50%;
-    border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-bottom: var(--tooltip-spike-border) solid transparent;
   }
-}
 
-.right {
-  &::before,
-  &::after {
+  &.right {
     right: 100%;
-    border-right: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-left: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::before {
-    bottom: 50%;
-    border-bottom: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-top: var(--tooltip-spike-border) solid transparent;
-  }
-
-  &::after {
     top: 50%;
-    border-top: var(--tooltip-spike-border) solid var(--tooltip-background-color);
-    border-bottom: var(--tooltip-spike-border) solid transparent;
   }
 }
