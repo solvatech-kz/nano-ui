@@ -131,33 +131,27 @@ const Tooltip: FC<TooltipProps> = ({
           case 'top':
             x = x + anchorRect.width / 2
             y = y - tooltipRect.height - getOffset()
-            updatePosition(x, y)
-            y = y + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'bottom':
             x = x + anchorRect.width / 2
             y = y + anchorRect.height + getOffset()
-            updatePosition(x, y)
-            y =
-              y -
-              (tooltipRect[finalPosition] > window.innerHeight ? tooltipRect[finalPosition] - window.innerHeight : 0)
             break
           case 'left':
             x = x - tooltipRect.width - getOffset()
             y = y + anchorRect.height / 2
-            updatePosition(x, y)
-            x = x + (tooltipRect[finalPosition] < 0 ? tooltipRect[finalPosition] : 0)
             break
           case 'right':
             x = x + anchorRect.width + getOffset()
             y = y + anchorRect.height / 2
-            updatePosition(x, y)
-            x =
-              x - (tooltipRect[finalPosition] > window.innerWidth ? tooltipRect[finalPosition] - window.innerWidth : 0)
             break
           default:
             break
         }
+        updatePosition(x, y)
+        x = x - (tooltipRect.left < 0 ? tooltipRect.left : 0)
+        x = x - (tooltipRect.right > window.innerWidth ? tooltipRect.right - window.innerWidth : 0)
+        y = y - (tooltipRect.top < 0 ? tooltipRect.top : 0)
+        y = y - (tooltipRect.bottom > window.innerHeight ? tooltipRect.bottom - window.innerHeight : 0)
         updatePosition(x, y)
         tooltipRef.current.style.setProperty('--delay', `${delay}ms`)
         setDefinedPosition(true)
